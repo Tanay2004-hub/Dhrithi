@@ -52,7 +52,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 .s0-bottom.visible { opacity: 1; transform: translateY(0); }
 
 .intro-content { text-align: center; max-width: 600px; }
-.intro-dates { font-family: 'Playfair Display', serif; font-size: 13px; letter-spacing: 6px; color: var(--cranberry); font-weight: 600; text-transform: uppercase; }
+.intro-dates { font-family: 'Playfair Display', serif; font-size: 14px; letter-spacing: 6px; color: var(--cranberry); font-weight: 600; text-transform: uppercase; }
 .intro-name { font-family: 'Cinzel Decorative', serif; font-size: clamp(4rem, 15vw, 8.5rem); font-weight: 400; color: var(--cranberry); line-height: 1; margin: 0.5rem 0; position: relative; }
 .intro-name::after { content: '♡'; font-style: normal; font-size: 0.3em; color: var(--rose); position: absolute; top: 0.15em; margin-left: 0.1em; }
 .intro-tagline { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--muted); font-style: italic; }
@@ -140,15 +140,15 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 
 .bg-pattern { position: absolute; inset: 0; display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; align-items: center; opacity: 0.15; z-index: 0; font-size: 3rem; overflow: hidden; pointer-events: none;}
 
-/* ─── EXACT INDIA MAP ─── */
+/* ─── REAL EXACT INDIA MAP SVG ─── */
 .map-container { position: relative; width: 100%; max-width: 450px; height: 500px; margin: 2rem auto; background: var(--photo-bg); border-radius: 30px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.05); border: 1px solid var(--line); }
-.india-svg { position: absolute; top: 5%; left: 8%; width: 85%; height: 90%; opacity: 0.35; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1)); }
-.map-path { position: absolute; top: 0; left: 0; width: 100%; height: 100%; stroke: var(--cranberry); stroke-width: 2px; stroke-dasharray: 6 6; fill: none; z-index: 1; animation: dash 30s linear infinite;}
+.india-svg { position: absolute; top: 0%; left: 5%; width: 90%; height: 100%; opacity: 0.25; filter: drop-shadow(0 10px 20px rgba(138,40,64,0.15)); }
+.map-path { position: absolute; top: 0; left: 0; width: 100%; height: 100%; stroke: var(--cranberry); stroke-width: 2.5px; stroke-dasharray: 6 8; fill: none; z-index: 1; animation: dash 30s linear infinite;}
 @keyframes dash { to { stroke-dashoffset: -200; } }
 .map-pin { position: absolute; display: flex; flex-direction: column; align-items: center; gap: 6px; z-index: 2; transform: translate(-50%, -50%); }
 .pin-dot { width: 12px; height: 12px; background: var(--cranberry); border-radius: 50%; box-shadow: 0 0 0 3px white; position: relative; }
 .pin-dot::after { content:''; position:absolute; inset:-6px; border-radius:50%; border:1px solid var(--pink); animation: pulseMap 2s infinite; }
-.pin-label { font-family: 'Playfair Display'; font-style: italic; font-size: 1.1rem; color: var(--cranberry); font-weight: 600; white-space: nowrap; background: rgba(255,255,255,0.8); padding: 2px 8px; border-radius: 10px;}
+.pin-label { font-family: 'Playfair Display'; font-style: italic; font-size: 1.1rem; color: var(--cranberry); font-weight: 600; white-space: nowrap; background: rgba(255,255,255,0.85); padding: 2px 8px; border-radius: 10px;}
 @keyframes pulseMap { 0% { transform: scale(0.5); opacity: 1; } 100% { transform: scale(1.5); opacity: 0; } }
 
 /* ─── FEEDBACK UI ─── */
@@ -247,23 +247,23 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
         <p style="font-size: 11px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 1rem;">The journey of us</p>
         
         <div class="map-container">
-            <svg class="india-svg" viewBox="0 0 450 500" fill="var(--rose)">
-                <path d="M152,19 C164,5 174,10 185,15 C206,23 219,45 224,65 C230,85 244,95 264,103 C290,113 303,136 313,160 C322,185 304,204 286,219 C264,236 244,258 226,280 C210,299 194,321 180,344 C163,375 147,406 131,438 C124,451 110,471 94,463 C75,453 82,422 80,402 C75,364 56,330 36,296 C20,270 5,244 14,213 C23,184 48,165 67,143 C87,118 111,99 134,75 C143,65 141,31 152,19 Z" />
+            <svg class="india-svg" viewBox="0 0 400 450" fill="var(--rose)">
+                <path d="M 125 5 L 140 3 L 155 15 L 165 35 L 180 40 L 195 30 L 205 45 L 210 70 L 235 85 L 260 90 L 275 95 L 305 100 L 320 90 L 335 95 L 350 110 L 360 135 L 345 155 L 325 155 L 315 170 L 295 180 L 285 160 L 270 170 L 265 195 L 255 210 L 235 240 L 220 270 L 210 290 L 195 315 L 180 340 L 160 375 L 145 410 L 135 440 L 115 425 L 100 400 L 90 355 L 75 320 L 55 285 L 40 260 L 25 245 L 5 215 L 15 195 L 45 185 L 65 160 L 85 135 L 105 100 L 120 70 L 115 35 Z" />
             </svg>
-            <svg class="map-path" viewBox="0 0 450 500">
-                <path d="M 180 135 Q 115 225 105 260 Q 112 280 120 290 Q 170 370 190 400" />
+            <svg class="map-path" viewBox="0 0 400 450">
+                <path d="M 130 110 Q 75 200 65 240 Q 75 260 85 265 Q 125 340 145 370" />
             </svg>
             
-            <div class="map-pin" style="top: 27%; left: 40%;">
+            <div class="map-pin" style="top: 25%; left: 32%;">
                 <div class="pin-dot"></div><span class="pin-label">Delhi</span>
             </div>
-            <div class="map-pin" style="top: 52%; left: 23%;">
+            <div class="map-pin" style="top: 55%; left: 16%;">
                 <div class="pin-dot"></div><span class="pin-label">Mumbai</span>
             </div>
-            <div class="map-pin" style="top: 58%; left: 27%;">
+            <div class="map-pin" style="top: 60%; left: 21%;">
                 <div class="pin-dot"></div><span class="pin-label">Pune</span>
             </div>
-            <div class="map-pin" style="top: 80%; left: 42%;">
+            <div class="map-pin" style="top: 84%; left: 36%;">
                 <div class="pin-dot"></div><span class="pin-label">Chennai</span>
             </div>
         </div>
@@ -331,7 +331,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 
 
 <script>
-/* ─── WEB3FORMS API KEY ─── */
+/* ─── WEB3FORMS EMAIL KEY ─── */
 const WEB3FORMS_KEY = "8be6a82c-5694-42b0-8ffd-ad2b249125ca";
 
 /* ─── FAST CURSOR ─── */
