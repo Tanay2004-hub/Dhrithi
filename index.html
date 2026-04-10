@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One Year — Dhrithi ♡</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ─── AESTHETIC DESIGN SYSTEM ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #fff0f3; 
+  --cranberry: #8a2840; 
+  --pink: #c8506e; --rose: #e8a0b4;
+  --light-rose: #f7c5d5; --line: #f0c5d0;
+  --text: #2d1520; --muted: #8a6570; --card: #ffffff;
+  --photo-bg: #fadce6;
+}
+body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; min-height: 100vh; cursor: none; }
+
+/* ─── LIQUID CURSOR ─── */
+#cursor { width: 8px; height: 8px; background: var(--pink); border-radius: 50%; position: fixed; pointer-events: none; z-index: 10000; }
+#cursor-follower { width: 35px; height: 35px; border: 1px solid var(--rose); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; }
+
+/* ─── RICH AMBIENT BACKGROUND ─── */
+#petals { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
+.petal { position: absolute; top: -50px; border-radius: 50% 0 50% 0; animation: petalFall linear infinite; opacity: 0.5; }
+@keyframes petalFall { 
+    0% { transform: translateY(0) rotate(0) scale(0.8); opacity: 0; } 
+    10% { opacity: 0.5; }
+    100% { transform: translateY(105vh) rotate(400deg) translateX(60px) scale(1.2); opacity: 0; } 
+}
+.bg-icon { position: fixed; pointer-events: none; z-index: 0; opacity: 0.25; filter: blur(0.5px); animation: float 10s ease-in-out infinite; font-size: 2.2rem; }
+@keyframes float { 0%, 100% { transform: translate(0,0) rotate(0); } 50% { transform: translate(20px, -30px) rotate(15deg); } }
+
+#progressBar { position: fixed; top: 0; left: 0; height: 4px; background: var(--cranberry); z-index: 1000; transition: width 0.7s ease; }
+
+/* ─── CINEMATIC SCREEN TRANSITIONS ─── */
+.screen { 
+    display: none; position: absolute; inset: 0; z-index: 10; min-height: 100vh; 
+    flex-direction: column; align-items: center; justify-content: center; padding: 2rem; 
+    opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.screen.active { display: flex; opacity: 1; transform: translateY(0); position: relative; }
+.screen.fade-out { opacity: 0; transform: translateY(-30px); }
+
+/* ─── HERO STYLING (SCROLLABLE) ─── */
+#s0 { display: block; overflow-y: auto; overflow-x: hidden; position: absolute; inset: 0; padding: 0; height: 100vh; scroll-behavior: smooth; }
+.s0-top { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding-bottom: 10vh;}
+.s0-bottom { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transform: translateY(50px); transition: all 1s ease; }
+.s0-bottom.visible { opacity: 1; transform: translateY(0); }
+
+.intro-content { text-align: center; max-width: 600px; }
+.intro-dates { font-family: 'Playfair Display', serif; font-size: 13px; letter-spacing: 6px; color: var(--cranberry); font-weight: 600; text-transform: uppercase; }
+.intro-name { font-family: 'Cinzel Decorative', serif; font-size: clamp(4rem, 15vw, 8.5rem); font-weight: 400; color: var(--cranberry); line-height: 1; margin: 0.5rem 0; position: relative; }
+.intro-name::after { content: '♡'; font-style: normal; font-size: 0.3em; color: var(--rose); position: absolute; top: 0.15em; margin-left: 0.1em; }
+.intro-tagline { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--muted); font-style: italic; }
+.intro-prompt { font-family: 'Inter', sans-serif; font-size: 13px; letter-spacing: 3px; color: var(--pink); text-transform: uppercase; margin-bottom: 2rem; font-weight: 600;}
+
+.scroll-prompt { position: absolute; bottom: 5vh; text-align: center; color: var(--rose); font-size: 11px; letter-spacing: 4px; text-transform: uppercase; opacity: 0.8; }
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
+
+.btn-premium {
+    padding: 1.2rem 3rem; background: var(--cranberry); color: white; width: 100%; max-width: 380px;
+    border: none; border-radius: 50px; font-family: 'Playfair Display'; font-style: italic; font-size: 1.2rem;
+    cursor: none; transition: 0.3s; box-shadow: 0 10px 20px rgba(138,40,64,0.15); margin: 0.5rem 0;
+}
+.btn-premium:hover { background: var(--pink); transform: translateY(-3px); }
+.btn-outline { background: transparent; color: var(--cranberry); border: 1px solid var(--cranberry); box-shadow: none;}
+.btn-outline:hover { background: #fffafb; }
+
+/* ─── Q&A CARDS ─── */
+.q-wrap { width: 100%; max-width: 500px; transition: opacity 0.5s; }
+.q-card { 
+    background: var(--card); border-radius: 20px; padding: 3rem 2.5rem; width: 100%; max-width: 500px; 
+    box-shadow: 0 15px 40px rgba(138,40,64,0.06); text-align: left; position: relative; overflow: hidden;
+}
+.q-watermark { position: absolute; top: -10px; right: 10px; font-family: 'Cinzel Decorative', serif; font-size: 8rem; color: var(--rose); opacity: 0.08; line-height: 1; pointer-events: none; z-index: 0; }
+.q-header { display: flex; align-items: flex-start; gap: 1.2rem; position: relative; z-index: 1; }
+.q-num { font-family: 'Playfair Display', serif; font-size: 5rem; color: var(--line); line-height: 0.75; font-weight: 600; flex-shrink: 0; margin-top: 5px;}
+.q-text { font-family: 'Playfair Display', serif; font-size: 1.7rem; color: var(--cranberry); line-height: 1.3; font-weight: 400; margin: 0; }
+.q-hint { font-size: 13px; color: var(--muted); font-style: italic; margin-top: 1rem; margin-bottom: 2rem; position: relative; z-index: 1; }
+
+.q-input { 
+    width: 100%; border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; 
+    font-size: 1rem; font-family: 'Inter', sans-serif; background: #fffafb; color: var(--cranberry); 
+    outline: none; transition: all 0.3s ease; margin-bottom: 1.5rem; position: relative; z-index: 1;
+}
+.q-input::placeholder { color: var(--muted); opacity: 0.7; font-style: italic; }
+.q-input:focus { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(200,80,110,0.1); }
+
+.btn-unlock {
+    width: 100%; padding: 16px; background: #c24d6a; color: white; border: none; border-radius: 12px;
+    font-family: 'Inter', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 2px;
+    text-transform: uppercase; cursor: none; transition: 0.3s; position: relative; z-index: 1;
+}
+.btn-unlock:hover { background: var(--cranberry); }
+
+/* ─── DRAG DROP STYLING ─── */
+.timeline-ui { display: flex; gap: 15px; width: 100%; margin-bottom: 1.5rem; position: relative; z-index: 1; }
+.month-col { display: flex; flex-direction: column; justify-content: space-between; padding: 10px 0; }
+.month-lbl { font-size: 10px; font-weight: 600; letter-spacing: 2px; color: var(--rose); text-transform: uppercase; height: 48px; display: flex; align-items: center; }
+.drop-zone { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+.drag-card { 
+    background: #fffafb; border: 1px solid var(--line); border-radius: 12px; 
+    padding: 10px 16px; font-size: 13px; color: var(--cranberry); cursor: grab;
+    display: flex; align-items: center; justify-content: space-between; height: 48px;
+}
+.drag-card.dragging { opacity: 0.4; transform: scale(0.98); border-color: var(--pink); background: white;}
+
+/* ─── REVEAL SCREEN ─── */
+.rev-wrap { display: none; flex-direction: column; align-items: center; text-align: center; width: 100%; max-width: 520px; position: relative; padding-top: 1rem; }
+.rev-wrap.show { display: flex; animation: slideUp 0.8s forwards; }
+.step-indicator { position: absolute; top: 0; right: 0; font-size: 11px; letter-spacing: 4px; color: var(--muted); }
+.rev-photo-box { background: var(--photo-bg); width: 100%; aspect-ratio: 4/3; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; margin-bottom: 2.5rem; overflow: hidden; position: relative; }
+.rev-clipart { font-size: 4rem; display: flex; gap: 15px; margin-bottom: 1rem; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1)); z-index: 2; }
+.rev-photo-title { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.6rem; color: var(--cranberry); margin-bottom: 0.5rem; font-weight: 600; z-index: 2; }
+.rev-photo-sub { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); z-index: 2; }
+.rev-title { font-family: 'Playfair Display', serif; font-style: italic; font-size: 2rem; color: var(--cranberry); font-weight: 700; margin-bottom: 0.3rem; }
+.rev-subtitle { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem; }
+.rev-msg-box { background: white; border: 1px solid var(--rose); border-radius: 16px; padding: 2rem; width: 100%; font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.25rem; color: var(--muted); line-height: 1.7; margin-bottom: 2.5rem; }
+
+.btn-next { background: transparent; color: var(--cranberry); border: 1px solid var(--rose); border-radius: 40px; padding: 12px 35px; font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.1rem; cursor: none; transition: 0.3s; }
+.btn-next:hover { background: #fffafb; border-color: var(--cranberry); transform: translateY(-2px); }
+
+/* ─── CLOCKS ─── */
+.hero-counters { display: flex; gap: 1.5rem; margin-top: 3.5rem; align-items: baseline; justify-content: center; flex-wrap: wrap; }
+.clock-unit { text-align: center; width: 85px; }
+.clock-val { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 7vw, 3.5rem); font-weight: 600; color: var(--cranberry); line-height: 1; display: block; }
+.clock-lab { font-size: 9px; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); margin-top: 5px; display: block; }
+.clock-sep { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--light-rose); }
+
+/* ─── MOMENTS GRID & SUB-PAGES ─── */
+.moments-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: 3rem; width: 100%; max-width: 800px; }
+.moment-card { background: transparent; border: 1.5px dashed var(--rose); border-radius: 20px; padding: 2rem 1rem; text-align: center; cursor: none; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.moment-card:hover { background: #fffbfc; border-color: var(--cranberry); }
+.moment-icon { font-size: 2.5rem; margin-bottom: 0.5rem; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));}
+.moment-label { font-family: 'Playfair Display', serif; font-style: italic; font-size: 16px; color: var(--cranberry); line-height: 1.4; }
+
+.bg-pattern { position: absolute; inset: 0; display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; align-items: center; opacity: 0.15; z-index: 0; font-size: 3rem; overflow: hidden; pointer-events: none;}
+
+/* ─── REAL INDIA MAP ─── */
+.map-container { position: relative; width: 100%; max-width: 450px; height: 500px; margin: 2rem auto; background: var(--photo-bg); border-radius: 30px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.05); border: 1px solid var(--line); }
+.india-svg { position: absolute; top: 5%; left: 8%; width: 85%; height: 90%; opacity: 0.35; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1)); }
+.map-path { position: absolute; top: 0; left: 0; width: 100%; height: 100%; stroke: var(--cranberry); stroke-width: 2px; stroke-dasharray: 6 6; fill: none; z-index: 1; animation: dash 30s linear infinite;}
+@keyframes dash { to { stroke-dashoffset: -200; } }
+.map-pin { position: absolute; display: flex; flex-direction: column; align-items: center; gap: 6px; z-index: 2; transform: translate(-50%, -50%); }
+.pin-dot { width: 12px; height: 12px; background: var(--cranberry); border-radius: 50%; box-shadow: 0 0 0 3px white; position: relative; }
+.pin-dot::after { content:''; position:absolute; inset:-6px; border-radius:50%; border:1px solid var(--pink); animation: pulseMap 2s infinite; }
+.pin-label { font-family: 'Playfair Display'; font-style: italic; font-size: 1.1rem; color: var(--cranberry); font-weight: 600; white-space: nowrap; background: rgba(255,255,255,0.8); padding: 2px 8px; border-radius: 10px;}
+@keyframes pulseMap { 0% { transform: scale(0.5); opacity: 1; } 100% { transform: scale(1.5); opacity: 0; } }
+
+/* ─── FEEDBACK UI ─── */
+.back-icon { position: absolute; top: 25px; left: 25px; background: transparent; border: none; font-size: 1.5rem; color: var(--muted); cursor: none; z-index: 10; transition: color 0.3s, transform 0.3s; }
+.back-icon:hover { color: var(--cranberry); transform: translateX(-3px); }
+.fb-sec-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--pink); font-style: italic; margin-bottom: 0.5rem; position: relative; z-index: 1; }
+.fb-opt { display: block; width: 100%; padding: 16px; margin-bottom: 12px; background: white; border: 1px solid var(--line); border-radius: 12px; color: var(--cranberry); font-family: 'Inter'; font-size: 14px; cursor: none; transition: 0.2s; position: relative; z-index: 1; font-weight: 500;}
+.fb-opt:hover { background: var(--photo-bg); }
+.fb-opt.selected { background: var(--pink); color: white; border-color: var(--cranberry); }
+.likert-box { display: flex; justify-content: space-between; margin: 2rem 0; position: relative; z-index: 1; }
+.likert-dot { width: 45px; height: 45px; border-radius: 50%; border: 1px solid var(--rose); background: white; display: flex; align-items: center; justify-content: center; font-weight: 600; color: var(--cranberry); cursor: none; transition: 0.2s; }
+.likert-dot:hover { background: var(--photo-bg); }
+.likert-dot.selected { background: var(--pink); color: white; border-color: var(--cranberry); transform: scale(1.1); }
+.grid-row { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--line); position: relative; z-index: 1; }
+.grid-lbl { font-family: 'Playfair Display'; font-size: 1.3rem; color: var(--cranberry); font-style: italic; }
+.grid-btns { display: flex; gap: 10px; }
+.grid-btn { padding: 8px 20px; border-radius: 20px; border: 1px solid var(--rose); background: white; color: var(--cranberry); font-size: 13px; font-weight: 600; cursor: none; transition: 0.2s;}
+.grid-btn:hover { background: var(--photo-bg); }
+.grid-btn.selected { background: var(--pink); color: white; border-color: var(--cranberry); }
+
+.thoughts-area { width: 100%; height: 250px; border: 1px solid var(--line); border-radius: 20px; padding: 20px; font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; color: var(--cranberry); background: #fffafb; resize: none; outline: none; line-height: 1.6; }
+.thoughts-area:focus { border-color: var(--pink); }
+
+@keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-follower"></div>
+<div id="progressBar"></div>
+<div id="petals"></div>
+<div id="bg-elements"></div>
+
+<div class="screen active" id="s0">
+    <div class="s0-top">
+        <div class="intro-content">
+            <span class="intro-dates">To,</span>
+            <h1 class="intro-name">Dhrithi</h1>
+            <p class="intro-tagline">365 days of choosing each other, across every distance.</p>
+        </div>
+        <div class="scroll-prompt">
+            <p>Scroll to begin</p>
+            <div style="font-size: 1.5rem; margin-top: 8px; animation: bounce 2s infinite;">↓</div>
+        </div>
+    </div>
+    
+    <div class="s0-bottom" id="s0-trigger">
+        <p class="intro-prompt">Complete the quiz to unlock your present.</p>
+        <button class="btn-premium" onclick="goTo(1)">Start Quiz &rarr;</button>
+    </div>
+</div>
+
+<div id="qContainer"></div>
+
+<div class="screen" id="sCeleb">
+    <div style="text-align: center; max-width: 650px;">
+        <h1 class="intro-name" style="font-size: clamp(3rem, 10vw, 5rem);">You Did It</h1>
+        <p style="font-family: 'Playfair Display'; font-style: italic; font-size: 1.5rem; color: var(--cranberry); line-height: 1.6; margin: 2rem 0;">
+            Yay baby, you crossed the hurdles!<br><br>
+            It's verified—you remember our relationship perfectly. Now that you are at the finish line, your true present is officially unlocked.
+        </p>
+        <button class="btn-premium" onclick="goTo('sFinal')">Enter Our Moments &rarr;</button>
+    </div>
+</div>
+
+<div class="screen" id="sFinal">
+    <div style="text-align: center; width: 100%; max-width: 850px;">
+        <h1 class="intro-name" style="font-size: clamp(3rem, 12vw, 5rem);">Our Moments</h1>
+        <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 2rem; color: var(--rose);">✦ ✦ ✦</div>
+        
+        <div class="hero-counters" style="margin-top: 1rem; margin-bottom: 4rem;">
+            <div class="clock-unit"><span class="clock-val val-days">0</span><span class="clock-lab">Days</span></div>
+            <span class="clock-sep">·</span>
+            <div class="clock-unit"><span class="clock-val val-hours">0</span><span class="clock-lab">Hours</span></div>
+            <span class="clock-sep">·</span>
+            <div class="clock-unit"><span class="clock-val val-mins">0</span><span class="clock-lab">Mins</span></div>
+            <span class="clock-sep">·</span>
+            <div class="clock-unit"><span class="clock-val val-secs">0</span><span class="clock-lab">Secs</span></div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px; align-items: center; width: 100%;">
+            <button class="btn-premium" onclick="goTo('sMap')">Our Map</button>
+            <button class="btn-premium" onclick="goTo('sWhatsApp')">WhatsApp Chronicles</button>
+            <button class="btn-premium" onclick="goTo('sThoughts')">Pen Your Thoughts</button>
+            <button class="btn-premium" onclick="goTo('sLetter')">A Letter To You</button>
+            <button class="btn-premium" onclick="goTo('sFeedbackIntro')">Feedback Form</button>
+            <button class="btn-premium btn-outline" onclick="alert('This memory is still being made. It will open on April 14, 2027.')">Our Future</button>
+        </div>
+    </div>
+</div>
+
+<div class="screen" id="sMap">
+    <div style="text-align: center; width: 100%; max-width: 600px;">
+        <h1 class="intro-name" style="font-size: clamp(2.5rem, 10vw, 4rem);">Our Map</h1>
+        <p style="font-size: 11px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 1rem;">The journey of us</p>
+        
+        <div class="map-container">
+            <svg class="india-svg" viewBox="0 0 450 500" fill="var(--rose)">
+                <path d="M152,19 C164,5 174,10 185,15 C206,23 219,45 224,65 C230,85 244,95 264,103 C290,113 303,136 313,160 C322,185 304,204 286,219 C264,236 244,258 226,280 C210,299 194,321 180,344 C163,375 147,406 131,438 C124,451 110,471 94,463 C75,453 82,422 80,402 C75,364 56,330 36,296 C20,270 5,244 14,213 C23,184 48,165 67,143 C87,118 111,99 134,75 C143,65 141,31 152,19 Z" />
+            </svg>
+            <svg class="map-path" viewBox="0 0 450 500">
+                <path d="M 180 135 Q 115 225 105 260 Q 112 280 120 290 Q 170 370 190 400" />
+            </svg>
+            
+            <div class="map-pin" style="top: 27%; left: 40%;">
+                <div class="pin-dot"></div><span class="pin-label">Delhi</span>
+            </div>
+            <div class="map-pin" style="top: 52%; left: 23%;">
+                <div class="pin-dot"></div><span class="pin-label">Mumbai</span>
+            </div>
+            <div class="map-pin" style="top: 58%; left: 27%;">
+                <div class="pin-dot"></div><span class="pin-label">Pune</span>
+            </div>
+            <div class="map-pin" style="top: 80%; left: 42%;">
+                <div class="pin-dot"></div><span class="pin-label">Chennai</span>
+            </div>
+        </div>
+        <p style="font-size: 11px; color: var(--rose); font-style: italic; margin-top: 1rem;">P.S. this is the best map Gemini could make. 😅</p>
+        <button class="btn-premium btn-outline" style="margin-top: 2rem;" onclick="goTo('sFinal')">← Back to Moments</button>
+    </div>
+</div>
+
+<div class="screen" id="sWhatsApp">
+    <div style="text-align: center; width: 100%; max-width: 600px;">
+        <h1 class="intro-name" style="font-size: clamp(2.5rem, 10vw, 4rem);">WhatsApp Chronicles</h1>
+        <p style="font-size: 11px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 0.5rem; margin-top: 1rem;">How many times we said these words</p>
+        <p style="font-size: 14px; font-weight: 500; color: var(--rose); font-style: italic; margin-bottom: 2rem;">Accurate up to 9th April 2026, 4:20 PM</p>
+        
+        <div id="statBox" style="background: var(--cranberry); color: white; padding: 3rem 2.5rem; border-radius: 30px; text-align: left; box-shadow: 0 20px 40px rgba(0,0,0,0.15);"></div>
+        
+        <button class="btn-premium btn-outline" style="margin-top: 3rem;" onclick="goTo('sFinal')">← Back to Moments</button>
+    </div>
+</div>
+
+<div class="screen" id="sThoughts">
+    <div style="text-align: center; width: 100%; max-width: 600px;">
+        <h1 class="intro-name" style="font-size: clamp(2.5rem, 10vw, 4rem);">Your Thoughts</h1>
+        <p style="font-size: 11px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 2rem;">Whatever is on your mind, for me</p>
+        
+        <textarea id="myThoughts" class="thoughts-area" placeholder="My dearest Tanay..."></textarea>
+        
+        <button class="btn-premium" style="margin-top: 1.5rem; width: 100%;" onclick="sendThoughts()">Send to Tanay ❤️</button>
+        <button class="btn-premium btn-outline" style="margin-top: 1rem;" onclick="goTo('sFinal')">← Back</button>
+    </div>
+</div>
+
+<div class="screen" id="sLetter">
+    <div style="text-align: center; width: 100%; max-width: 600px;">
+        <h1 class="intro-name" style="font-size: clamp(2.5rem, 10vw, 4rem);">A Letter To You</h1>
+        <p style="font-size: 11px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 2rem;">From me</p>
+        
+        <div class="q-card" style="margin: 0 auto; padding: 4rem 3rem;">
+            <p style="font-family: 'Playfair Display'; font-style: italic; font-size: 1.2rem; line-height: 1.8; color: var(--muted);">
+                [ Your beautiful letter content will go here... Just paste it into the code when you are ready. ]
+            </p>
+        </div>
+        
+        <button class="btn-premium btn-outline" style="margin-top: 3rem;" onclick="goTo('sFinal')">← Back to Moments</button>
+    </div>
+</div>
+
+<div class="screen" id="sFeedbackIntro">
+    <div style="text-align: center; width: 100%; max-width: 600px;">
+        <h1 class="intro-name" style="font-size: clamp(2.5rem, 10vw, 4rem);">Feedback Form</h1>
+        <p style="font-size: 11px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 2rem;">Annual Performance Review</p>
+        
+        <div class="q-card" style="margin: 0 auto; text-align: center; padding: 4rem 3rem;">
+            <p style="font-family: 'Playfair Display'; font-style: italic; font-size: 1.3rem; color: var(--cranberry); margin-bottom: 2rem; line-height: 1.6;">
+                Time to settle some ongoing debates, test your memory, and officially rate my boyfriend skills.<br><br>Be brutally honest (but remember I'm sensitive). 😉
+            </p>
+            <button class="btn-unlock" onclick="goTo('sFeedback1')">Start Interrogation &rarr;</button>
+        </div>
+        
+        <button class="btn-premium btn-outline" style="margin-top: 3rem;" onclick="goTo('sFinal')">← Back to Moments</button>
+    </div>
+</div>
+
+<div id="fContainer"></div>
+
+
+<script>
+/* ─── IMPORTANT: WHATSAPP REDIRECT NUMBER ─── */
+const YOUR_PHONE_NUMBER = "917701909269";
+
+/* ─── FAST CURSOR ─── */
+const dot = document.getElementById('cursor');
+const circle = document.getElementById('cursor-follower');
+let mX = 0, mY = 0, dX = 0, dY = 0, cX = 0, cY = 0;
+document.addEventListener('mousemove', e => { mX = e.clientX; mY = e.clientY; });
+function move() {
+    dX += (mX - dX) * 0.55; dY += (mY - dY) * 0.55;
+    cX += (mX - cX) * 0.3; cY += (mY - cY) * 0.3;
+    dot.style.left = dX + 'px'; dot.style.top = dY + 'px';
+    circle.style.left = (cX - 17.5) + 'px'; circle.style.top = (cY - 17.5) + 'px';
+    requestAnimationFrame(move);
+}
+move();
+
+/* ─── SCROLL REVEAL LOGIC ─── */
+document.getElementById('s0').addEventListener('scroll', function() {
+    const trigger = document.getElementById('s0-trigger');
+    if (this.scrollTop > window.innerHeight * 0.3) {
+        trigger.classList.add('visible');
+    }
+});
+
+/* ─── MAZE DATA ─── */
+const QS = [
+    { 
+        q: "What did we buy the first time we met, and from where?", 
+        hint: "that first night outside... you remember.", 
+        type: "text", ans: ["farmaaish", "12:30", "lighter", "sutta"], 
+        clipart: "🚬 🔥", bgPattern: null,
+        title: "The first night", sub: "APRIL 14 · 12:30AM · OPPOSITE FARMAAISH", 
+        msg: "Opposite Farmaaish at 12:30am. A lighter and two suttas. That's where it started on April 14th. Just seeing how it goes." 
+    },
+    { 
+        q: "Ganga Hamlet: Shampoo, Face Wash, Moisturizer?", 
+        hint: "the three brands in your bathroom...", 
+        type: "text", ans: ["loreal", "seba", "minimalist"], 
+        clipart: "🧴 🫧 🧴", bgPattern: null,
+        title: "The details", sub: "GANGA HAMLET", 
+        msg: "Loreal Shampoo, Sebamed Facewash, and Minimalist moisturizer." 
+    },
+    { 
+        q: "Hotels in Chennai and Mumbai?", 
+        hint: "the ones we spent the night in...", 
+        type: "text", ans: ["spectra", "highway"], 
+        clipart: "🏖️ 🌊 🌇", bgPattern: null,
+        title: "Miles apart, but together", sub: "CHENNAI · MUMBAI", 
+        msg: "Hotel Kay-EM Spectra and Hotel Highway Inn. The distance never mattered when we were together." 
+    },
+    { 
+        q: "What is the brand from which we got your ring and the cross pendant?", 
+        hint: "think dainty and silver...", 
+        type: "text", ans: ["caliber", "calib", "calibe", "callib", "calleb", "caliberee", "caliberiee", "calibre", "caliberie", "celib"], 
+        clipart: "💍 ✨ ✝️", bgPattern: "💍 ✝️",
+        title: "The Silver Pieces", sub: "A RING AND A CROSS", 
+        msg: "Caliberiee Jewellery. Beautiful, dainty, and chosen especially for you." 
+    },
+    { 
+        q: "Name 3 current Barça players.", 
+        hint: "any 3 from the current squad...", 
+        type: "text", ans: ["pedri", "yamal", "gavi", "olmo", "raphinha", "lewandowski", "cubarsi", "balde", "kounde"], 
+        clipart: "🔴🔵 ⚽ 🏟️ 🏆 🐐", bgPattern: null,
+        title: "True Love", sub: "VISCA EL BARÇA", 
+        msg: "You put up with my football obsession. That's how I know it's real." 
+    },
+    { 
+        q: "Match the gifts to the timeline:", 
+        hint: "drag and drop them in order...", 
+        type: "drag", correct: ["Pink Pipe", "Zara Dress", "Stanley Sipper", "Lego Ferrari", "Cross Necklace"], 
+        months: ["April", "July", "August", "January", "February"], icons: ["💨", "👗", "🥤", "🏎️", "✝️"], 
+        clipart: "💨 👗 🥤 🏎️ ✝️", bgPattern: "🎁",
+        title: "A year of chosen memories", sub: "APRIL TO FEBRUARY", 
+        msg: "From a pink pipe in Goa to the cross in Mumbai. Every gift was a piece of us." 
+    },
+    { 
+        q: "Rank these gifts by your favorite:", 
+        hint: "drag your favorite to the top...", 
+        type: "drag", isFav: true, 
+        clipart: "💨 👗 🥤 🏎️ ✝️", bgPattern: "🎁",
+        title: "The Favorites", sub: "EVERYTHING YOU LOVE", 
+        msg: "Whatever you picked, I'm glad you loved them. But you're the best gift I ever received." 
+    },
+    { 
+        q: "What is our motto?", 
+        hint: "you know this one...", 
+        type: "text", ans: ["doob before lube"], 
+        clipart: "🌿 💧 💦", bgPattern: null,
+        title: "Our Motto", sub: "WORDS TO LIVE BY", 
+        msg: "Doob before lube. Exactly. 😉" 
+    }
+];
+
+const qBox = document.getElementById('qContainer');
+QS.forEach((q, i) => {
+    const n = i + 1;
+    const div = document.createElement('div');
+    div.className = 'screen'; div.id = 's' + n;
+    let interaction = '';
+    
+    if(q.type === "text") {
+        interaction = `<input type="text" class="q-input" id="inp${n}" placeholder="your answer..." onkeydown="if(event.key==='Enter')submit(${n})">`;
+    } else {
+        const items = q.isFav ? ["Cross Necklace", "Zara Dress", "Stanley Sipper", "Lego Ferrari", "Pink Pipe"] : [...q.correct].sort(() => Math.random() - 0.5);
+        const iconMap = {"Pink Pipe":"💨", "Zara Dress":"👗", "Stanley Sipper":"🥤", "Lego Ferrari":"🏎️", "Cross Necklace":"✝️"};
+        interaction = `<div class="timeline-ui">${q.months ? `<div class="month-col">${q.months.map(m=>`<div class="month-lbl">${m}</div>`).join('')}</div>`:''}<div class="drop-zone" id="dz${n}">${items.map(it=>`<div class="drag-card" draggable="true"><span>${it}</span><span style="font-size: 1.3rem;">${iconMap[it]||'🎁'}</span></div>`).join('')}</div></div>`;
+    }
+
+    let bgPatternHtml = '';
+    if (q.bgPattern) { bgPatternHtml = `<div class="bg-pattern">${q.bgPattern.repeat(30)}</div>`; }
+    
+    div.innerHTML = `
+    <div class="q-wrap" id="qw${n}">
+        <div class="q-card">
+            <div class="q-watermark">${n}</div>
+            <div class="q-header">
+                <span class="q-num">${n}</span>
+                <h3 class="q-text">${q.q}</h3>
+            </div>
+            <p class="q-hint">${q.hint}</p>
+            ${interaction}
+            <button class="btn-unlock" onclick="submit(${n})">Unlock this memory →</button>
+        </div>
+    </div>
+    
+    <div class="rev-wrap" id="rv${n}">
+        ${bgPatternHtml}
+        <div class="step-indicator">${n} / ${QS.length}</div>
+        
+        <div class="rev-photo-box">
+            <div class="rev-clipart">${q.clipart}</div>
+            <div class="rev-photo-title">${q.title}</div>
+            <div class="rev-photo-sub">${q.sub}</div>
+        </div>
+        
+        <h2 class="rev-title">${q.title}</h2>
+        <p class="rev-subtitle">${q.sub}</p>
+        
+        <div class="rev-msg-box">${q.msg}</div>
+        
+        <button class="btn-next" onclick="goTo(${n+1})">${n === QS.length ? 'Finish the maze →' : 'next memory →'}</button>
+    </div>`;
+    qBox.appendChild(div);
+});
+
+/* ─── FEEDBACK ENGINE ─── */
+let fbAnswers = {};
+const FQS = [
+    {sec: "Warm-up", q: "First impression of me?", type: "mcq", opts: ["Too confident", "Confusing", "Interesting", "Idk but I stayed"]},
+    {sec: "Warm-up", q: "One word to describe us right now", type: "short"},
+    {sec: "Warm-up", q: "Who fell harder first?", type: "mcq", opts: ["You", "Me", "Both pretending not to"]},
+    {sec: "Memory Recall", q: "The moment you knew this is not casual", type: "short"},
+    {sec: "Memory Recall", q: "One small thing I do that you notice but I don’t", type: "short"},
+    {sec: "Relationship Reality", q: "We communicate well even when things are hard", type: "likert"},
+    {sec: "Relationship Reality", q: "I feel emotionally safe with you", type: "likert"},
+    {sec: "Relationship Reality", q: "Distance has made us stronger", type: "likert"},
+    {sec: "Relationship Reality", q: "You understand me without me saying everything", type: "likert"},
+    {sec: "Relationship Reality", q: "We handle fights better now than before", type: "likert"},
+    {sec: "Fun Section", q: "Who is more:", type: "grid", items: ["Stubborn", "Dramatic", "Attached"]},
+    {sec: "Fun Section", q: "Your favourite nickname for me", type: "short"},
+    {sec: "Fun Section", q: "If our relationship was a movie:", type: "mcq", opts: ["Romcom", "Slow burn", "Chaos with plot", "Long distance documentary"]},
+    {sec: "Honest Zone", q: "One thing I should improve", type: "short"},
+    {sec: "Honest Zone", q: "One thing you’re grateful for in us", type: "short"},
+    {sec: "Honest Zone", q: "I see a future with you", type: "likert"},
+    {sec: "Honest Zone", q: "This relationship is worth the effort", type: "likert"},
+    {sec: "Emotional Close", q: "If you had to relive one moment with me", type: "short"},
+    {sec: "Emotional Close", q: "What do I mean to you right now (don’t overthink)", type: "short"},
+    {sec: "Ending", q: "Would you choose this again?", type: "mcq", opts: ["Yes", "Obviously yes", "Stupid question"]},
+    {sec: "Ending", q: "One line for me (final)", type: "short"}
+];
+
+const fBox = document.getElementById('fContainer');
+FQS.forEach((fq, i) => {
+    const n = i + 1;
+    const div = document.createElement('div');
+    div.className = 'screen'; div.id = 'sFeedback' + n;
+    
+    let interaction = '';
+    if(fq.type === "short") {
+        interaction = `<input type="text" class="q-input" id="fbInp${n}" style="text-align:left;" placeholder="Your answer..." onkeydown="if(event.key==='Enter')submitF(${n})">`;
+    } else if(fq.type === "mcq") {
+        interaction = `<div id="fbGrp${n}">` + fq.opts.map(opt => `<button class="fb-opt" onclick="toggleSel(this, 'fbGrp${n}')" data-val="${opt}">${opt}</button>`).join('') + `</div>`;
+    } else if(fq.type === "likert") {
+        interaction = `<div class="likert-box" id="fbGrp${n}">${[1,2,3,4,5].map(num => `<div class="likert-dot" onclick="toggleSel(this, 'fbGrp${n}')" data-val="${num}">${num}</div>`).join('')}</div>
+        <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--muted); text-transform:uppercase; margin-bottom:1rem;"><span>Strongly Disagree</span><span>Strongly Agree</span></div>`;
+    } else if(fq.type === "grid") {
+        interaction = `<div id="fbGrp${n}">` + fq.items.map((item, idx) => `<div class="grid-row"><span class="grid-lbl">${item}</span><div class="grid-btns" id="fbGridRow${n}_${idx}"><button class="grid-btn" onclick="toggleSel(this, 'fbGridRow${n}_${idx}')" data-val="${item}: You">You</button><button class="grid-btn" onclick="toggleSel(this, 'fbGridRow${n}_${idx}')" data-val="${item}: Me">Me</button></div></div>`).join('') + `</div>`;
+    }
+
+    div.innerHTML = `
+        <div class="q-card" style="max-width: 600px; position: relative;">
+            <div class="q-watermark">${n}</div>
+            <button class="back-icon" onclick="goBackF(${n})">←</button>
+            <h2 class="fb-sec-title">${fq.sec}</h2>
+            <h3 class="q-text" style="font-size:1.4rem; font-family:'Inter'; font-style:normal; margin-bottom:2rem;">${fq.q}</h3>
+            ${interaction}
+            <button class="btn-unlock" style="margin-top:2rem;" onclick="submitF(${n})">${n === FQS.length ? 'Send to Tanay ❤️' : 'Next'}</button>
+        </div>
+    `;
+    fBox.appendChild(div);
+});
+
+function toggleSel(btn, grpId) {
+    const group = document.getElementById(grpId);
+    if(btn.classList.contains('selected')) {
+        btn.classList.remove('selected'); 
+    } else {
+        group.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
+        btn.classList.add('selected');
+    }
+}
+
+function goBackF(n) {
+    if(n === 1) goTo('sFeedbackIntro');
+    else goTo('sFeedback' + (n - 1));
+}
+
+function submitF(n) {
+    const fq = FQS[n-1];
+    let answer = "";
+    
+    if(fq.type === "short") {
+        answer = document.getElementById('fbInp'+n).value.trim();
+        if(!answer) return alert("Please write something baby ❤️");
+    } else if(fq.type === "grid") {
+        const rows = document.querySelectorAll(`#fbGrp${n} .grid-btns`);
+        let gridAns = [];
+        let missing = false;
+        rows.forEach(r => {
+            const sel = r.querySelector('.selected');
+            if(!sel) missing = true;
+            else gridAns.push(sel.getAttribute('data-val'));
+        });
+        if(missing) return alert("Please select an option for all rows ❤️");
+        answer = gridAns.join(" | ");
+    } else {
+        const sel = document.querySelector(`#fbGrp${n} .selected`);
+        if(!sel) return alert("Please select an option baby ❤️");
+        answer = sel.getAttribute('data-val');
+    }
+    
+    fbAnswers[`Q${n}: ${fq.q}`] = answer;
+    
+    if(n === FQS.length) { sendFeedback(); } 
+    else { goTo('sFeedback' + (n+1)); }
+}
+
+/* ─── DATA EXFILTRATION (SEND TO WHATSAPP) ─── */
+function sendThoughts() {
+    const text = document.getElementById('myThoughts').value.trim();
+    if(!text) return alert("Write something first baby ❤️");
+    
+    const msg = encodeURIComponent(`*My Thoughts For You:* \n\n"${text}"`);
+    window.open(`https://wa.me/${YOUR_PHONE_NUMBER}?text=${msg}`, '_blank');
+    goTo('sFinal');
+}
+
+function sendFeedback() {
+    let msg = `*Anniversary Feedback Form:* \n\n`;
+    for(const [q, a] of Object.entries(fbAnswers)) {
+        msg += `*${q}*\n👉 ${a}\n\n`;
+    }
+    window.open(`https://wa.me/${YOUR_PHONE_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+    goTo('sFinal');
+}
+
+/* ─── CINEMATIC TRANSITIONS ─── */
+function goTo(n) {
+    const activeScreen = document.querySelector('.screen.active');
+    let targetId = '';
+    
+    if (typeof n === 'number') {
+        if (n > QS.length) { targetId = 'sCeleb'; } 
+        else { targetId = 's' + n; }
+    } else { targetId = n; }
+    
+    if (activeScreen) {
+        activeScreen.classList.remove('active');
+        activeScreen.classList.add('fade-out');
+        setTimeout(() => {
+            activeScreen.style.display = 'none';
+            activeScreen.classList.remove('fade-out');
+            showScreen(targetId);
+        }, 500);
+    } else { showScreen(targetId); }
+
+    if(typeof n === 'number' && n <= QS.length) {
+        document.getElementById('progressBar').style.width = ((n-1)/QS.length)*100 + '%';
+    } else if (targetId === 'sCeleb' || targetId === 'sFinal') {
+        document.getElementById('progressBar').style.width = '100%';
+    }
+}
+
+function showScreen(id) {
+    const target = document.getElementById(id);
+    target.style.display = 'flex';
+    setTimeout(() => { target.classList.add('active'); }, 50);
+    window.scrollTo(0, 0); 
+}
+
+function submit(n) {
+    const q = QS[n-1];
+    let ok = false;
+    if(q.type === "text") {
+        const v = document.getElementById('inp'+n).value.toLowerCase();
+        ok = q.ans.some(a => v.includes(a));
+    } else if(q.isFav) { ok = true; }
+    else {
+        const cur = [...document.querySelectorAll(`#dz${n} .drag-card span:first-child`)].map(x => x.innerText);
+        ok = JSON.stringify(cur) === JSON.stringify(q.correct);
+    }
+    if(ok) {
+        document.querySelector(`#s${n} .q-wrap`).style.display = 'none';
+        document.getElementById('rv'+n).classList.add('show');
+    } else { 
+        alert("Try again, baby. ❤️"); 
+    }
+}
+
+/* ─── DRAG EVENT ─── */
+document.addEventListener('dragstart', e => { if(e.target.classList.contains('drag-card')) e.target.classList.add('dragging'); });
+document.addEventListener('dragend', e => { if(e.target.classList.contains('drag-card')) e.target.classList.remove('dragging'); });
+document.addEventListener('dragover', e => {
+    e.preventDefault();
+    const zone = e.target.closest('.drop-zone'); if(!zone) return;
+    const dragging = document.querySelector('.dragging');
+    const after = [...zone.querySelectorAll('.drag-card:not(.dragging)')].find(c => e.clientY < c.getBoundingClientRect().top + c.getBoundingClientRect().height/2);
+    if(!after) zone.appendChild(dragging); else zone.insertBefore(dragging, after);
+});
+
+/* ─── LIVE CLOCK & DECOR ─── */
+function initClocks() {
+    const start = new Date('2025-04-14T00:30:00+05:30').getTime();
+    setInterval(() => {
+        const d = Date.now() - start;
+        const days = Math.floor(d / 86400000);
+        const hours = Math.floor((d % 86400000) / 3600000);
+        const mins = Math.floor((d % 3600000) / 60000);
+        const secs = Math.floor((d % 60000) / 1000);
+        
+        document.querySelectorAll('.val-days').forEach(el => el.innerText = days.toLocaleString('en-IN'));
+        document.querySelectorAll('.val-hours').forEach(el => el.innerText = hours.toLocaleString('en-IN'));
+        document.querySelectorAll('.val-mins').forEach(el => el.innerText = mins.toLocaleString('en-IN'));
+        document.querySelectorAll('.val-secs').forEach(el => el.innerText = secs.toLocaleString('en-IN'));
+    }, 1000);
+
+    const nicks = { "Baby": 2558, "Babyy": 21, "Babyyy": 93, "Babyyyy": 56, "Babyyyyy": 12 };
+    const box = document.getElementById('statBox');
+    if(box && box.children.length === 0) {
+        Object.entries(nicks).forEach(([k,v]) => {
+            box.innerHTML += `<div style="display:flex; justify-content:space-between; align-items:center; padding:18px 0; border-bottom:1px solid rgba(255,255,255,0.15); font-family:'Inter'; font-size:1.1rem;"><span>${k}</span><span style="color:var(--light-rose); font-weight:600; font-family:'Playfair Display'; font-size:1.4rem;">${v}</span></div>`;
+        });
+    }
+}
+
+(function(){
+    initClocks();
+    const pBox = document.getElementById('petals');
+    const favs = ['🎀','🎀','🌷','🌷','🍣','🍱','🥢','🍫','🍫'];
+    const bg = document.getElementById('bg-elements');
+    for(let i=0; i<35; i++){
+        const p = document.createElement('div'); p.className='petal';
+        p.style.cssText = `left:${Math.random()*100}%; width:14px; height:16px; background:#f7c5d5; animation-duration:${8+Math.random()*10}s; animation-delay:${Math.random()*5}s;`;
+        pBox.appendChild(p);
+    }
+    for(let i=0; i<15; i++){
+        const icon = document.createElement('div'); icon.className='bg-icon';
+        icon.innerText = favs[Math.floor(Math.random()*favs.length)];
+        icon.style.cssText = `left:${Math.random()*100}%; top:${Math.random()*100}%; animation-delay:${Math.random()*5}s;`;
+        bg.appendChild(icon);
+    }
+})();
+</script>
+</body>
+</html>
