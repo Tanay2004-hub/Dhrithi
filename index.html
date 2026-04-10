@@ -26,7 +26,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 /* ─── MOBILE FIXES ─── */
 @media (hover: none) and (pointer: coarse) {
     #cursor, #cursor-follower { display: none !important; }
-    *, body, button, .btn-premium, .btn-unlock, .fb-opt, .likert-dot, .grid-btn, .moment-card, .back-icon { cursor: auto !important; }
+    *, body, button, .btn-premium, .btn-unlock, .fb-opt, .likert-dot, .grid-btn, .moment-card, .back-icon, .drag-card { cursor: auto !important; }
 }
 
 /* ─── RICH AMBIENT BACKGROUND ─── */
@@ -103,7 +103,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 }
 .btn-unlock:hover { background: var(--cranberry); }
 
-/* ─── DRAG DROP STYLING ─── */
+/* ─── DRAG DROP STYLING (WITH SMOOTH HOVER ANIMATIONS) ─── */
 .timeline-ui { display: flex; gap: 15px; width: 100%; margin-bottom: 1.5rem; position: relative; z-index: 1; }
 .month-col { display: flex; flex-direction: column; justify-content: space-between; padding: 10px 0; }
 .month-lbl { font-size: 10px; font-weight: 600; letter-spacing: 2px; color: var(--rose); text-transform: uppercase; height: 48px; display: flex; align-items: center; }
@@ -112,9 +112,24 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
     background: #fffafb; border: 1px solid var(--line); border-radius: 12px; 
     padding: 10px 16px; font-size: 13px; color: var(--cranberry); cursor: grab;
     display: flex; align-items: center; justify-content: space-between; height: 48px;
-    touch-action: none; /* Prevents browser handling touch for native scroll */
+    touch-action: none; 
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    user-select: none;
+    -webkit-user-select: none;
 }
-.drag-card.dragging { opacity: 0.4; transform: scale(0.98); border-color: var(--pink); background: white;}
+.drag-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(138,40,64,0.08);
+    border-color: var(--cranberry);
+}
+.drag-card.dragging { 
+    opacity: 0.9; 
+    transform: scale(1.05); 
+    border-color: var(--pink); 
+    background: white;
+    box-shadow: 0 10px 25px rgba(138,40,64,0.15);
+    z-index: 100;
+}
 
 /* ─── REVEAL SCREEN ─── */
 .rev-wrap { display: none; flex-direction: column; align-items: center; text-align: center; width: 100%; max-width: 520px; position: relative; padding-top: 1rem; }
@@ -141,7 +156,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 /* ─── MOMENTS GRID & SUB-PAGES ─── */
 .moments-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: 3rem; width: 100%; max-width: 800px; }
 .moment-card { background: transparent; border: 1.5px dashed var(--rose); border-radius: 20px; padding: 2rem 1rem; text-align: center; cursor: none; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 10px; }
-.moment-card:hover { background: #fffbfc; border-color: var(--cranberry); }
+.moment-card:hover { background: #fffbfc; border-color: var(--cranberry); transform: translateY(-3px);}
 .moment-icon { font-size: 2.5rem; margin-bottom: 0.5rem; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));}
 .moment-label { font-family: 'Playfair Display', serif; font-style: italic; font-size: 16px; color: var(--cranberry); line-height: 1.4; }
 
@@ -149,13 +164,14 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 
 /* ─── EXACT INDIA MAP SVG ─── */
 .map-container { position: relative; width: 100%; max-width: 450px; height: 500px; margin: 2rem auto; background: var(--photo-bg); border-radius: 30px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.05); border: 1px solid var(--line); }
-.india-svg { position: absolute; top: 5%; left: 8%; width: 85%; height: 90%; opacity: 0.35; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1)); }
-.map-path { position: absolute; top: 0; left: 0; width: 100%; height: 100%; stroke: var(--cranberry); stroke-width: 2px; stroke-dasharray: 6 6; fill: none; z-index: 1; animation: dash 30s linear infinite;}
+.india-svg { position: absolute; top: 0%; left: 5%; width: 90%; height: 100%; opacity: 0.25; filter: drop-shadow(0 10px 20px rgba(138,40,64,0.15)); }
+.map-path { position: absolute; top: 0; left: 0; width: 100%; height: 100%; stroke: var(--cranberry); stroke-width: 2.5px; stroke-dasharray: 6 8; fill: none; z-index: 1; animation: dash 30s linear infinite;}
 @keyframes dash { to { stroke-dashoffset: -200; } }
-.map-pin { position: absolute; display: flex; flex-direction: column; align-items: center; gap: 6px; z-index: 2; transform: translate(-50%, -50%); }
+.map-pin { position: absolute; display: flex; flex-direction: column; align-items: center; gap: 6px; z-index: 2; transform: translate(-50%, -50%); transition: 0.3s;}
+.map-pin:hover { transform: translate(-50%, -55%); }
 .pin-dot { width: 12px; height: 12px; background: var(--cranberry); border-radius: 50%; box-shadow: 0 0 0 3px white; position: relative; }
 .pin-dot::after { content:''; position:absolute; inset:-6px; border-radius:50%; border:1px solid var(--pink); animation: pulseMap 2s infinite; }
-.pin-label { font-family: 'Playfair Display'; font-style: italic; font-size: 1.1rem; color: var(--cranberry); font-weight: 600; white-space: nowrap; background: rgba(255,255,255,0.8); padding: 2px 8px; border-radius: 10px;}
+.pin-label { font-family: 'Playfair Display'; font-style: italic; font-size: 1.1rem; color: var(--cranberry); font-weight: 600; white-space: nowrap; background: rgba(255,255,255,0.85); padding: 2px 8px; border-radius: 10px;}
 @keyframes pulseMap { 0% { transform: scale(0.5); opacity: 1; } 100% { transform: scale(1.5); opacity: 0; } }
 
 /* ─── FEEDBACK UI ─── */
@@ -164,20 +180,20 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 .fb-sec-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--pink); font-style: italic; margin-bottom: 0.5rem; position: relative; z-index: 1; }
 .fb-opt { display: block; width: 100%; padding: 16px; margin-bottom: 12px; background: white; border: 1px solid var(--line); border-radius: 12px; color: var(--cranberry); font-family: 'Inter'; font-size: 14px; cursor: none; transition: 0.2s; position: relative; z-index: 1; font-weight: 500;}
 .fb-opt:hover { background: var(--photo-bg); }
-.fb-opt.selected { background: var(--pink); color: white; border-color: var(--cranberry); }
+.fb-opt.selected { background: var(--pink); color: white; border-color: var(--cranberry); transform: scale(1.02); }
 .likert-box { display: flex; justify-content: space-between; margin: 2rem 0; position: relative; z-index: 1; }
 .likert-dot { width: 45px; height: 45px; border-radius: 50%; border: 1px solid var(--rose); background: white; display: flex; align-items: center; justify-content: center; font-weight: 600; color: var(--cranberry); cursor: none; transition: 0.2s; }
-.likert-dot:hover { background: var(--photo-bg); }
-.likert-dot.selected { background: var(--pink); color: white; border-color: var(--cranberry); transform: scale(1.1); }
+.likert-dot:hover { background: var(--photo-bg); transform: scale(1.1); }
+.likert-dot.selected { background: var(--pink); color: white; border-color: var(--cranberry); transform: scale(1.15); box-shadow: 0 5px 15px rgba(200,80,110,0.3); }
 .grid-row { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--line); position: relative; z-index: 1; }
 .grid-lbl { font-family: 'Playfair Display'; font-size: 1.3rem; color: var(--cranberry); font-style: italic; }
 .grid-btns { display: flex; gap: 10px; }
 .grid-btn { padding: 8px 20px; border-radius: 20px; border: 1px solid var(--rose); background: white; color: var(--cranberry); font-size: 13px; font-weight: 600; cursor: none; transition: 0.2s;}
-.grid-btn:hover { background: var(--photo-bg); }
-.grid-btn.selected { background: var(--pink); color: white; border-color: var(--cranberry); }
+.grid-btn:hover { background: var(--photo-bg); transform: translateY(-2px); }
+.grid-btn.selected { background: var(--pink); color: white; border-color: var(--cranberry); transform: scale(1.05); }
 
-.thoughts-area { width: 100%; height: 250px; border: 1px solid var(--line); border-radius: 20px; padding: 20px; font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; color: var(--cranberry); background: #fffafb; resize: none; outline: none; line-height: 1.6; }
-.thoughts-area:focus { border-color: var(--pink); }
+.thoughts-area { width: 100%; height: 250px; border: 1px solid var(--line); border-radius: 20px; padding: 20px; font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; color: var(--cranberry); background: #fffafb; resize: none; outline: none; line-height: 1.6; transition: border-color 0.3s; }
+.thoughts-area:focus { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(200,80,110,0.1); }
 
 @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 </style>
@@ -254,20 +270,20 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
         <p style="font-size: 11px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 1rem;">The journey of us</p>
         
         <div class="map-container">
-            <svg class="india-svg" viewBox="0 0 450 500" fill="var(--rose)">
-                <path d="M152,19 C164,5 174,10 185,15 C206,23 219,45 224,65 C230,85 244,95 264,103 C290,113 303,136 313,160 C322,185 304,204 286,219 C264,236 244,258 226,280 C210,299 194,321 180,344 C163,375 147,406 131,438 C124,451 110,471 94,463 C75,453 82,422 80,402 C75,364 56,330 36,296 C20,270 5,244 14,213 C23,184 48,165 67,143 C87,118 111,99 134,75 C143,65 141,31 152,19 Z" />
+            <svg class="india-svg" viewBox="0 0 420 520">
+                <path d="M200,20 Q210,10 220,20 Q230,30 235,50 Q250,60 270,70 Q290,75 310,80 Q320,75 340,80 Q360,90 380,100 Q390,120 380,140 Q370,160 350,165 Q330,165 310,175 Q290,180 270,170 Q260,190 250,210 Q230,250 210,300 Q190,350 170,400 Q150,450 140,480 Q130,500 120,480 Q110,430 90,380 Q70,330 60,280 Q50,230 40,220 Q20,210 25,190 Q40,180 60,190 Q80,180 100,170 Q120,150 140,120 Q160,90 170,60 Q180,40 200,20 Z" fill="rgba(232, 160, 180, 0.15)" stroke="var(--cranberry)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
             </svg>
-            <svg class="map-path" viewBox="0 0 450 500">
-                <path d="M 180 135 Q 115 225 105 260 Q 112 280 120 290 Q 170 370 190 400" />
+            <svg class="map-path" viewBox="0 0 420 520">
+                <path d="M 189 130 Q 120 220 84 286 Q 95 300 105 312 Q 150 360 176 416" stroke-linecap="round" />
             </svg>
             
-            <div class="map-pin" style="top: 27%; left: 40%;">
+            <div class="map-pin" style="top: 25%; left: 45%;">
                 <div class="pin-dot"></div><span class="pin-label">Delhi</span>
             </div>
-            <div class="map-pin" style="top: 52%; left: 23%;">
+            <div class="map-pin" style="top: 55%; left: 20%;">
                 <div class="pin-dot"></div><span class="pin-label">Mumbai</span>
             </div>
-            <div class="map-pin" style="top: 58%; left: 27%;">
+            <div class="map-pin" style="top: 60%; left: 25%;">
                 <div class="pin-dot"></div><span class="pin-label">Pune</span>
             </div>
             <div class="map-pin" style="top: 80%; left: 42%;">
@@ -376,7 +392,7 @@ const QS = [
     { 
         q: "Ganga Hamlet: Shampoo, Face Wash, Moisturizer?", 
         hint: "the three brands in your bathroom...", 
-        type: "text", ans: ["loreal", "seba", "minimalist"], 
+        type: "text", ans: ["loreal", "l'oreal", "l'oréal", "l'Oréal", "seba", "minimalist"], 
         clipart: "🧴 🫧 🧴", bgPattern: null,
         title: "The details", sub: "GANGA HAMLET", 
         msg: "Loreal Shampoo, Sebamed Facewash, and Minimalist moisturizer." 
