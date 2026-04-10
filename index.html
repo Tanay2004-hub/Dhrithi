@@ -23,6 +23,12 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 #cursor { width: 8px; height: 8px; background: var(--pink); border-radius: 50%; position: fixed; pointer-events: none; z-index: 10000; }
 #cursor-follower { width: 35px; height: 35px; border: 1px solid var(--rose); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; }
 
+/* ─── MOBILE FIXES ─── */
+@media (hover: none) and (pointer: coarse) {
+    #cursor, #cursor-follower { display: none !important; }
+    *, body, button, .btn-premium, .btn-unlock, .fb-opt, .likert-dot, .grid-btn, .moment-card, .back-icon { cursor: auto !important; }
+}
+
 /* ─── RICH AMBIENT BACKGROUND ─── */
 #petals { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
 .petal { position: absolute; top: -50px; border-radius: 50% 0 50% 0; animation: petalFall linear infinite; opacity: 0.5; }
@@ -101,11 +107,12 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 .timeline-ui { display: flex; gap: 15px; width: 100%; margin-bottom: 1.5rem; position: relative; z-index: 1; }
 .month-col { display: flex; flex-direction: column; justify-content: space-between; padding: 10px 0; }
 .month-lbl { font-size: 10px; font-weight: 600; letter-spacing: 2px; color: var(--rose); text-transform: uppercase; height: 48px; display: flex; align-items: center; }
-.drop-zone { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+.drop-zone { flex: 1; display: flex; flex-direction: column; gap: 10px; position: relative; }
 .drag-card { 
     background: #fffafb; border: 1px solid var(--line); border-radius: 12px; 
     padding: 10px 16px; font-size: 13px; color: var(--cranberry); cursor: grab;
     display: flex; align-items: center; justify-content: space-between; height: 48px;
+    touch-action: none; /* Prevents browser handling touch for native scroll */
 }
 .drag-card.dragging { opacity: 0.4; transform: scale(0.98); border-color: var(--pink); background: white;}
 
@@ -140,19 +147,16 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 
 .bg-pattern { position: absolute; inset: 0; display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; align-items: center; opacity: 0.15; z-index: 0; font-size: 3rem; overflow: hidden; pointer-events: none;}
 
-/* ─── IMAGE MAP WITH ANIMATED OVERLAY ─── */
-.map-container { position: relative; width: 100%; max-width: 450px; aspect-ratio: 1 / 1; margin: 2rem auto; border-radius: 30px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.05); border: 1px solid var(--line); background: var(--photo-bg); }
-.map-img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1; }
-.map-path-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
-.map-path-overlay path { 
-    stroke: var(--cranberry); 
-    stroke-width: 0.8; 
-    stroke-dasharray: 2 3; 
-    fill: none; 
-    animation: dash 15s linear infinite; 
-    filter: drop-shadow(0 2px 4px var(--pink)); 
-}
-@keyframes dash { to { stroke-dashoffset: -100; } }
+/* ─── EXACT INDIA MAP SVG ─── */
+.map-container { position: relative; width: 100%; max-width: 450px; height: 500px; margin: 2rem auto; background: var(--photo-bg); border-radius: 30px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.05); border: 1px solid var(--line); }
+.india-svg { position: absolute; top: 5%; left: 8%; width: 85%; height: 90%; opacity: 0.35; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1)); }
+.map-path { position: absolute; top: 0; left: 0; width: 100%; height: 100%; stroke: var(--cranberry); stroke-width: 2px; stroke-dasharray: 6 6; fill: none; z-index: 1; animation: dash 30s linear infinite;}
+@keyframes dash { to { stroke-dashoffset: -200; } }
+.map-pin { position: absolute; display: flex; flex-direction: column; align-items: center; gap: 6px; z-index: 2; transform: translate(-50%, -50%); }
+.pin-dot { width: 12px; height: 12px; background: var(--cranberry); border-radius: 50%; box-shadow: 0 0 0 3px white; position: relative; }
+.pin-dot::after { content:''; position:absolute; inset:-6px; border-radius:50%; border:1px solid var(--pink); animation: pulseMap 2s infinite; }
+.pin-label { font-family: 'Playfair Display'; font-style: italic; font-size: 1.1rem; color: var(--cranberry); font-weight: 600; white-space: nowrap; background: rgba(255,255,255,0.8); padding: 2px 8px; border-radius: 10px;}
+@keyframes pulseMap { 0% { transform: scale(0.5); opacity: 1; } 100% { transform: scale(1.5); opacity: 0; } }
 
 /* ─── FEEDBACK UI ─── */
 .back-icon { position: absolute; top: 25px; left: 25px; background: transparent; border: none; font-size: 1.5rem; color: var(--muted); cursor: none; z-index: 10; transition: color 0.3s, transform 0.3s; }
@@ -250,10 +254,25 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
         <p style="font-size: 11px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 1rem;">The journey of us</p>
         
         <div class="map-container">
-            <img src="map.png" alt="Our Map" class="map-img">
-            <svg class="map-path-overlay" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <path d="M 46 29 Q 34 45 29 58 L 33 59 Q 40 68 51 73" />
+            <svg class="india-svg" viewBox="0 0 450 500" fill="var(--rose)">
+                <path d="M152,19 C164,5 174,10 185,15 C206,23 219,45 224,65 C230,85 244,95 264,103 C290,113 303,136 313,160 C322,185 304,204 286,219 C264,236 244,258 226,280 C210,299 194,321 180,344 C163,375 147,406 131,438 C124,451 110,471 94,463 C75,453 82,422 80,402 C75,364 56,330 36,296 C20,270 5,244 14,213 C23,184 48,165 67,143 C87,118 111,99 134,75 C143,65 141,31 152,19 Z" />
             </svg>
+            <svg class="map-path" viewBox="0 0 450 500">
+                <path d="M 180 135 Q 115 225 105 260 Q 112 280 120 290 Q 170 370 190 400" />
+            </svg>
+            
+            <div class="map-pin" style="top: 27%; left: 40%;">
+                <div class="pin-dot"></div><span class="pin-label">Delhi</span>
+            </div>
+            <div class="map-pin" style="top: 52%; left: 23%;">
+                <div class="pin-dot"></div><span class="pin-label">Mumbai</span>
+            </div>
+            <div class="map-pin" style="top: 58%; left: 27%;">
+                <div class="pin-dot"></div><span class="pin-label">Pune</span>
+            </div>
+            <div class="map-pin" style="top: 80%; left: 42%;">
+                <div class="pin-dot"></div><span class="pin-label">Chennai</span>
+            </div>
         </div>
         <p style="font-size: 11px; color: var(--rose); font-style: italic; margin-top: 1rem;">P.S. this is the best map Gemini could make. 😅</p>
         <button class="btn-premium btn-outline" style="margin-top: 2rem;" onclick="goTo('sFinal')">← Back to Moments</button>
@@ -675,7 +694,29 @@ function submit(n) {
     }
 }
 
-/* ─── DRAG EVENT ─── */
+/* ─── TOUCH DRAG EVENTS FOR MOBILE ─── */
+document.addEventListener('touchstart', e => {
+    const card = e.target.closest('.drag-card');
+    if(card) card.classList.add('dragging');
+}, {passive: true});
+
+document.addEventListener('touchmove', e => {
+    const dragging = document.querySelector('.dragging');
+    if(!dragging) return;
+    e.preventDefault(); // Prevents screen from scrolling while sorting
+    const touch = e.touches[0];
+    const zone = dragging.closest('.drop-zone');
+    if(!zone) return;
+    const after = [...zone.querySelectorAll('.drag-card:not(.dragging)')].find(c => touch.clientY < c.getBoundingClientRect().top + c.getBoundingClientRect().height/2);
+    if(!after) zone.appendChild(dragging); else zone.insertBefore(dragging, after);
+}, {passive: false});
+
+document.addEventListener('touchend', e => {
+    const dragging = document.querySelector('.dragging');
+    if(dragging) dragging.classList.remove('dragging');
+});
+
+/* ─── MOUSE DRAG EVENT FOR DESKTOP ─── */
 document.addEventListener('dragstart', e => { if(e.target.classList.contains('drag-card')) e.target.classList.add('dragging'); });
 document.addEventListener('dragend', e => { if(e.target.classList.contains('drag-card')) e.target.classList.remove('dragging'); });
 document.addEventListener('dragover', e => {
