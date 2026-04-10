@@ -163,8 +163,8 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 .bg-pattern { position: absolute; inset: 0; display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; align-items: center; opacity: 0.15; z-index: 0; font-size: 3rem; overflow: hidden; pointer-events: none;}
 
 /* ─── IMAGE MAP (CLEAN) ─── */
-.map-container { position: relative; width: 100%; max-width: 450px; aspect-ratio: 1 / 1.1; margin: 2rem auto; background: var(--photo-bg); border-radius: 30px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.05); border: 1px solid var(--line); }
-.map-img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1; opacity: 0.95; }
+.map-container { position: relative; width: 100%; max-width: 450px; aspect-ratio: 1 / 1.5; margin: 2rem auto; background: var(--photo-bg); border-radius: 30px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.05); border: 1px solid var(--line); }
+.map-img { width: 100%; height: 100%; object-fit: contain; position: absolute; top: 0; left: 0; z-index: 1; opacity: 0.95; }
 
 /* ─── FEEDBACK UI ─── */
 .back-icon { position: absolute; top: 25px; left: 25px; background: transparent; border: none; font-size: 1.5rem; color: var(--muted); cursor: none; z-index: 10; transition: color 0.3s, transform 0.3s; }
@@ -663,6 +663,9 @@ function showScreen(id) {
     target.style.display = 'flex';
     setTimeout(() => { target.classList.add('active'); }, 50);
     window.scrollTo(0, 0); 
+    
+    // Save to short-term memory
+    sessionStorage.setItem('currentScreen', id);
 }
 
 function submit(n) {
@@ -757,6 +760,25 @@ function initClocks() {
         icon.innerText = favs[Math.floor(Math.random()*favs.length)];
         icon.style.cssText = `left:${Math.random()*100}%; top:${Math.random()*100}%; animation-delay:${Math.random()*5}s;`;
         bg.appendChild(icon);
+    }
+
+    // ─── RESTORE STATE ON REFRESH ───
+    const savedScreen = sessionStorage.getItem('currentScreen');
+    if (savedScreen && savedScreen !== 's0') {
+        const s0 = document.getElementById('s0');
+        s0.classList.remove('active');
+        s0.style.display = 'none';
+        showScreen(savedScreen);
+
+        // Restore the top progress bar visually
+        if (['sCeleb', 'sFinal', 'sMap', 'sWhatsApp', 'sThoughts', 'sLetter', 'sFeedbackIntro'].includes(savedScreen) || savedScreen.startsWith('sFeedback')) {
+            document.getElementById('progressBar').style.width = '100%';
+        } else if (savedScreen.startsWith('s')) {
+            let num = parseInt(savedScreen.substring(1));
+            if (!isNaN(num) && num <= QS.length) {
+                document.getElementById('progressBar').style.width = ((num-1)/QS.length)*100 + '%';
+            }
+        }
     }
 })();
 </script>
