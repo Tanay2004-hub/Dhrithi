@@ -140,7 +140,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 
 .bg-pattern { position: absolute; inset: 0; display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; align-items: center; opacity: 0.15; z-index: 0; font-size: 3rem; overflow: hidden; pointer-events: none;}
 
-/* ─── REAL INDIA MAP ─── */
+/* ─── EXACT INDIA MAP ─── */
 .map-container { position: relative; width: 100%; max-width: 450px; height: 500px; margin: 2rem auto; background: var(--photo-bg); border-radius: 30px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.05); border: 1px solid var(--line); }
 .india-svg { position: absolute; top: 5%; left: 8%; width: 85%; height: 90%; opacity: 0.35; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1)); }
 .map-path { position: absolute; top: 0; left: 0; width: 100%; height: 100%; stroke: var(--cranberry); stroke-width: 2px; stroke-dasharray: 6 6; fill: none; z-index: 1; animation: dash 30s linear infinite;}
@@ -291,7 +291,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
         
         <textarea id="myThoughts" class="thoughts-area" placeholder="My dearest Tanay..."></textarea>
         
-        <button class="btn-premium" style="margin-top: 1.5rem; width: 100%;" onclick="sendThoughts()">Send to Tanay ❤️</button>
+        <button class="btn-premium" style="margin-top: 1.5rem; width: 100%;" onclick="sendThoughts(this)">Send to Tanay ❤️</button>
         <button class="btn-premium btn-outline" style="margin-top: 1rem;" onclick="goTo('sFinal')">← Back</button>
     </div>
 </div>
@@ -331,8 +331,8 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 
 
 <script>
-/* ─── IMPORTANT: WHATSAPP REDIRECT NUMBER ─── */
-const YOUR_PHONE_NUMBER = "917701909269";
+/* ─── WEB3FORMS API KEY ─── */
+const WEB3FORMS_KEY = "8be6a82c-5694-42b0-8ffd-ad2b249125ca";
 
 /* ─── FAST CURSOR ─── */
 const dot = document.getElementById('cursor');
@@ -511,7 +511,7 @@ FQS.forEach((fq, i) => {
     
     let interaction = '';
     if(fq.type === "short") {
-        interaction = `<input type="text" class="q-input" id="fbInp${n}" style="text-align:left;" placeholder="Your answer..." onkeydown="if(event.key==='Enter')submitF(${n})">`;
+        interaction = `<input type="text" class="q-input" id="fbInp${n}" style="text-align:left;" placeholder="Your answer..." onkeydown="if(event.key==='Enter')submitF(${n}, this)">`;
     } else if(fq.type === "mcq") {
         interaction = `<div id="fbGrp${n}">` + fq.opts.map(opt => `<button class="fb-opt" onclick="toggleSel(this, 'fbGrp${n}')" data-val="${opt}">${opt}</button>`).join('') + `</div>`;
     } else if(fq.type === "likert") {
@@ -528,7 +528,7 @@ FQS.forEach((fq, i) => {
             <h2 class="fb-sec-title">${fq.sec}</h2>
             <h3 class="q-text" style="font-size:1.4rem; font-family:'Inter'; font-style:normal; margin-bottom:2rem;">${fq.q}</h3>
             ${interaction}
-            <button class="btn-unlock" style="margin-top:2rem;" onclick="submitF(${n})">${n === FQS.length ? 'Send to Tanay ❤️' : 'Next'}</button>
+            <button class="btn-unlock" style="margin-top:2rem;" onclick="submitF(${n}, this)">${n === FQS.length ? 'Send to Tanay ❤️' : 'Next'}</button>
         </div>
     `;
     fBox.appendChild(div);
@@ -549,7 +549,7 @@ function goBackF(n) {
     else goTo('sFeedback' + (n - 1));
 }
 
-function submitF(n) {
+function submitF(n, btn) {
     const fq = FQS[n-1];
     let answer = "";
     
@@ -575,26 +575,62 @@ function submitF(n) {
     
     fbAnswers[`Q${n}: ${fq.q}`] = answer;
     
-    if(n === FQS.length) { sendFeedback(); } 
+    if(n === FQS.length) { sendFeedback(btn); } 
     else { goTo('sFeedback' + (n+1)); }
 }
 
-/* ─── DATA EXFILTRATION (SEND TO WHATSAPP) ─── */
-function sendThoughts() {
+/* ─── DATA EXFILTRATION (SILENT EMAIL VIA WEB3FORMS) ─── */
+async function sendThoughts(btn) {
     const text = document.getElementById('myThoughts').value.trim();
     if(!text) return alert("Write something first baby ❤️");
     
-    const msg = encodeURIComponent(`*My Thoughts For You:* \n\n"${text}"`);
-    window.open(`https://wa.me/${YOUR_PHONE_NUMBER}?text=${msg}`, '_blank');
+    const originalText = btn.innerText;
+    btn.innerText = "Sending... ✨";
+    
+    try {
+        await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "Accept": "application/json" },
+            body: JSON.stringify({
+                access_key: WEB3FORMS_KEY,
+                subject: "💌 New Letter from Dhrithi!",
+                message: text
+            })
+        });
+        alert("Saved in my heart ❤️");
+    } catch (error) {
+        alert("Oops, something went wrong. But I still love you! ❤️");
+    }
+
+    btn.innerText = originalText;
     goTo('sFinal');
 }
 
-function sendFeedback() {
-    let msg = `*Anniversary Feedback Form:* \n\n`;
+async function sendFeedback(btn) {
+    const originalText = btn ? btn.innerText : "Send to Tanay ❤️";
+    if(btn) btn.innerText = "Sending to Tanay... ✨";
+
+    let formattedAnswers = "";
     for(const [q, a] of Object.entries(fbAnswers)) {
-        msg += `*${q}*\n👉 ${a}\n\n`;
+        formattedAnswers += `<b>${q}</b><br>👉 ${a}<br><br>`;
     }
-    window.open(`https://wa.me/${YOUR_PHONE_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+
+    try {
+        await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "Accept": "application/json" },
+            body: JSON.stringify({
+                access_key: WEB3FORMS_KEY,
+                subject: "📊 Dhrithi's Annual Performance Review",
+                message: formattedAnswers
+            })
+        });
+        alert("Feedback received. Thank you baby ❤️");
+    } catch (error) {
+        alert("Oops, something went wrong. But I still love you! ❤️");
+    }
+
+    if(btn) btn.innerText = originalText;
     goTo('sFinal');
 }
 
