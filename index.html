@@ -204,6 +204,7 @@ body {
 .burst-slider:hover { opacity: 1; }
 .burst-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 25px; height: 25px; border-radius: 50%; background: var(--pink); cursor: none; box-shadow: 0 0 10px rgba(200,80,110,0.5);}
 
+
 /* ─── MAP & FEEDBACK UI ─── */
 .map-container { position: relative; width: 100%; max-width: 450px; aspect-ratio: 1 / 1.5; margin: 2rem auto; background: var(--photo-bg); border-radius: 30px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.05); border: 1px solid var(--line); }
 .map-img { width: 100%; height: 100%; object-fit: contain; position: absolute; top: 0; left: 0; z-index: 1; opacity: 0.95; }
@@ -267,15 +268,15 @@ body {
             Yay baby, you crossed the hurdles!<br><br>
             It's verified—you remember our relationship perfectly. Now that you are at the finish line, your true present is officially unlocked.
         </p>
-        <button class="btn-premium" onclick="goTo('sFinal')">Enter Our App &rarr;</button>
+        <button class="btn-premium" onclick="goTo('sFinal')">Enter Our Moments &rarr;</button>
     </div>
 </div>
 
 <div class="screen" id="sFinal">
-    <div style="text-align: center; width: 100%; max-width: 850px; padding-bottom: 4rem;">
-        <h1 class="intro-name" style="font-size: clamp(3rem, 12vw, 5rem);">Our App</h1>
+    <div style="text-align: center; width: 100%; max-width: 850px; padding-bottom: 2rem;">
+        <h1 class="intro-name" style="font-size: clamp(3rem, 12vw, 5rem);">Our Moments</h1>
         
-        <div class="hero-counters" style="margin-top: 1rem; margin-bottom: 2rem;">
+        <div class="hero-counters" style="margin-top: 1rem; margin-bottom: 3rem;">
             <div class="clock-unit"><span class="clock-val val-days">0</span><span class="clock-lab">Days</span></div>
             <span class="clock-sep">·</span>
             <div class="clock-unit"><span class="clock-val val-hours">0</span><span class="clock-lab">Hours</span></div>
@@ -285,16 +286,33 @@ body {
             <div class="clock-unit"><span class="clock-val val-secs">0</span><span class="clock-lab">Secs</span></div>
         </div>
 
-        <div class="menu-section-title">Play to Unlock</div>
-        <div class="moments-grid">
+        <div style="display: flex; flex-direction: column; gap: 15px; align-items: center; width: 100%; max-width: 380px; margin: 0 auto;">
+            <button class="btn-premium" onclick="goTo('sGamesMenu')">Fun Games 🎮</button>
+            <button class="btn-premium btn-outline" onclick="goTo('sDeepDiveMenu')">The Deep Dive 🌊</button>
+        </div>
+    </div>
+</div>
+
+<div class="screen" id="sGamesMenu">
+    <div style="text-align: center; width: 100%; max-width: 850px; padding-bottom: 4rem;">
+        <h1 class="intro-name" style="font-size: clamp(3rem, 10vw, 4rem);">Fun Games</h1>
+        
+        <div class="moments-grid" style="margin-top: 3rem;">
             <button class="btn-premium" onclick="goTo('sPuzzle')">The Puzzle 🧩</button>
             <button class="btn-premium" onclick="goTo('sMatch')">Memory Match 🃏</button>
-            <button class="btn-premium" onclick="goTo('sCaptcha')">Captcha ✅</button>
-            <button class="btn-premium" onclick="goTo('sBurst')">A Burst of Her 📸</button>
+            <button class="btn-premium" onclick="goTo('sCaptcha')">Prettiness Verification ✅</button>
+            <button class="btn-premium" onclick="goTo('sBurst')">Click to Melt 📸</button>
         </div>
+        
+        <button class="btn-premium btn-outline" style="margin-top: 2rem;" onclick="goTo('sFinal')">← Back to Hub</button>
+    </div>
+</div>
 
-        <div class="menu-section-title">The Deep Dive</div>
-        <div class="moments-grid">
+<div class="screen" id="sDeepDiveMenu">
+    <div style="text-align: center; width: 100%; max-width: 850px; padding-bottom: 4rem;">
+        <h1 class="intro-name" style="font-size: clamp(3rem, 10vw, 4rem);">The Deep Dive</h1>
+        
+        <div class="moments-grid" style="margin-top: 3rem;">
             <button class="btn-premium btn-outline" onclick="goTo('sMap')">Our Map</button>
             <button class="btn-premium btn-outline" onclick="goTo('sWhatsApp')">WhatsApp Chronicles</button>
             <button class="btn-premium btn-outline" onclick="goTo('sThoughts')">Pen Your Thoughts</button>
@@ -302,12 +320,14 @@ body {
             <button class="btn-premium btn-outline" onclick="goTo('sFeedbackIntro')">Performance Review</button>
             <button class="btn-premium btn-outline" style="border-color: var(--line); color: var(--muted);" onclick="alert('This memory is still being made. It will open on April 14, 2027.')">Our Future 🔒</button>
         </div>
+        
+        <button class="btn-premium btn-outline" style="margin-top: 2rem;" onclick="goTo('sFinal')">← Back to Hub</button>
     </div>
 </div>
 
 <div class="screen" id="sPuzzle">
     <div style="text-align: center; width: 100%; max-width: 600px;">
-        <button class="back-icon" onclick="goTo('sFinal')">←</button>
+        <button class="back-icon" onclick="goTo('sGamesMenu')">←</button>
         <h1 class="intro-name" style="font-size: clamp(2rem, 8vw, 3rem);">The Puzzle</h1>
         <p style="font-size: 11px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 2rem;">Tap two pieces to swap them</p>
         
@@ -315,12 +335,14 @@ body {
             <div class="puzzle-grid" id="puzzleBoard"></div>
             <p id="puzzleSuccess" style="display:none; font-family:'Playfair Display'; font-style:italic; font-size:1.5rem; color:var(--pink); margin-top:2rem;">You put us together perfectly ❤️</p>
         </div>
+        
+        <button class="btn-premium btn-outline" style="margin-top: 2rem; width: 100%; max-width: 380px;" onclick="goTo('sGamesMenu')">← Back to Fun Games</button>
     </div>
 </div>
 
 <div class="screen" id="sMatch">
     <div style="text-align: center; width: 100%; max-width: 600px;">
-        <button class="back-icon" onclick="goTo('sFinal')">←</button>
+        <button class="back-icon" onclick="goTo('sGamesMenu')">←</button>
         <h1 class="intro-name" style="font-size: clamp(2rem, 8vw, 3rem);">Memory Match</h1>
         <p style="font-size: 11px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 2rem;">Find the matching pairs</p>
         
@@ -328,14 +350,16 @@ body {
             <div class="match-grid" id="matchBoard"></div>
             <p id="matchSuccess" style="display:none; font-family:'Playfair Display'; font-style:italic; font-size:1.5rem; color:var(--pink); margin-top:2rem;">A perfect match, just like us ❤️</p>
         </div>
+        
+        <button class="btn-premium btn-outline" style="margin-top: 2rem; width: 100%; max-width: 380px;" onclick="goTo('sGamesMenu')">← Back to Fun Games</button>
     </div>
 </div>
 
 <div class="screen" id="sCaptcha">
     <div style="text-align: center; width: 100%; max-width: 600px;">
-        <button class="back-icon" onclick="goTo('sFinal')">←</button>
-        <h1 class="intro-name" style="font-size: clamp(2rem, 8vw, 3rem);">Security Check</h1>
-        <p style="font-size: 11px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 2rem;">Are you a robot?</p>
+        <button class="back-icon" onclick="goTo('sGamesMenu')">←</button>
+        <h1 class="intro-name" style="font-size: clamp(2rem, 8vw, 3rem);">Prettiness Verification</h1>
+        <p style="font-size: 11px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 2rem;">Security Check</p>
         
         <div class="game-container active">
             <div class="captcha-box">
@@ -350,13 +374,15 @@ body {
             </div>
             <p id="capSuccess" style="display:none; font-family:'Playfair Display'; font-style:italic; font-size:1.5rem; color:var(--pink); margin-top:2rem;">Verification passed. 100% Gorgeous. ❤️</p>
         </div>
+        
+        <button class="btn-premium btn-outline" style="margin-top: 2rem; width: 100%; max-width: 380px;" onclick="goTo('sGamesMenu')">← Back to Fun Games</button>
     </div>
 </div>
 
 <div class="screen" id="sBurst">
     <div style="text-align: center; width: 100%; max-width: 600px;">
-        <button class="back-icon" onclick="goTo('sFinal')">←</button>
-        <h1 class="intro-name" style="font-size: clamp(2rem, 8vw, 3rem);">A Burst of Her</h1>
+        <button class="back-icon" onclick="goTo('sGamesMenu')">←</button>
+        <h1 class="intro-name" style="font-size: clamp(2rem, 8vw, 3rem);">Click to Melt</h1>
         <p style="font-size: 11px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 1rem;">Slide to animate</p>
         
         <div class="game-container active">
@@ -364,9 +390,11 @@ body {
                 <img id="burstDisplay" class="burst-img" alt="Burst Frame">
             </div>
             <div class="slider-wrap">
-                <input type="range" min="1" max="15" value="1" class="burst-slider" id="burstSlider">
+                <input type="range" min="1" max="18" value="1" class="burst-slider" id="burstSlider">
             </div>
         </div>
+        
+        <button class="btn-premium btn-outline" style="margin-top: 2rem; width: 100%; max-width: 380px;" onclick="goTo('sGamesMenu')">← Back to Fun Games</button>
     </div>
 </div>
 
@@ -377,7 +405,7 @@ body {
         <div class="map-container">
             <img src="map.png" alt="Our Map" class="map-img">
         </div>
-        <button class="btn-premium btn-outline" style="margin-top: 2rem;" onclick="goTo('sFinal')">← Back to Menu</button>
+        <button class="btn-premium btn-outline" style="margin-top: 2rem;" onclick="goTo('sDeepDiveMenu')">← Back to Menu</button>
     </div>
 </div>
 
@@ -387,7 +415,7 @@ body {
         <p style="font-size: 11px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 0.5rem; margin-top: 1rem;">How many times we said these words</p>
         <p style="font-size: 14px; font-weight: 500; color: var(--rose); font-style: italic; margin-bottom: 2rem;">Accurate up to 9th April 2026, 4:20 PM</p>
         <div id="statBox" style="background: var(--cranberry); color: white; padding: 3rem 2.5rem; border-radius: 30px; text-align: left; box-shadow: 0 20px 40px rgba(0,0,0,0.15);"></div>
-        <button class="btn-premium btn-outline" style="margin-top: 3rem;" onclick="goTo('sFinal')">← Back to Menu</button>
+        <button class="btn-premium btn-outline" style="margin-top: 3rem;" onclick="goTo('sDeepDiveMenu')">← Back to Menu</button>
     </div>
 </div>
 
@@ -397,7 +425,7 @@ body {
         <p style="font-size: 11px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 2rem;">Whatever is on your mind, for me</p>
         <textarea id="myThoughts" class="thoughts-area" placeholder="My dearest Tanay..."></textarea>
         <button class="btn-premium" style="margin-top: 1.5rem; width: 100%;" onclick="sendThoughts(this)">Send to Tanay ❤️</button>
-        <button class="btn-premium btn-outline" style="margin-top: 1rem;" onclick="goTo('sFinal')">← Back</button>
+        <button class="btn-premium btn-outline" style="margin-top: 1rem;" onclick="goTo('sDeepDiveMenu')">← Back</button>
     </div>
 </div>
 
@@ -410,7 +438,7 @@ body {
                 [ Your beautiful letter content will go here... Just paste it into the code when you are ready. ]
             </p>
         </div>
-        <button class="btn-premium btn-outline" style="margin-top: 3rem;" onclick="goTo('sFinal')">← Back to Menu</button>
+        <button class="btn-premium btn-outline" style="margin-top: 3rem;" onclick="goTo('sDeepDiveMenu')">← Back to Menu</button>
     </div>
 </div>
 
@@ -424,7 +452,7 @@ body {
             </p>
             <button class="btn-unlock" onclick="goTo('sFeedback1')">Start Interrogation &rarr;</button>
         </div>
-        <button class="btn-premium btn-outline" style="margin-top: 3rem;" onclick="goTo('sFinal')">← Back to Menu</button>
+        <button class="btn-premium btn-outline" style="margin-top: 3rem;" onclick="goTo('sDeepDiveMenu')">← Back to Menu</button>
     </div>
 </div>
 
@@ -441,7 +469,6 @@ function loadImg(baseName, callback) {
     let i = 0;
     function tryNext() {
         if(i >= validExts.length) {
-            // Failsafe pink box if image is truly missing
             callback('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><rect width="100%" height="100%" fill="%23fadce6"/></svg>');
             return;
         }
@@ -479,177 +506,39 @@ move();
 
 /* ─── SCROLL REVEAL LOGIC ─── */
 document.getElementById('s0').addEventListener('scroll', function() {
-    const trigger = document.getElementById('s0-trigger');
     if (this.scrollTop > window.innerHeight * 0.3) {
-        trigger.classList.add('visible');
+        document.getElementById('s0-trigger').classList.add('visible');
     }
 });
 
 /* ─── MAZE DATA ─── */
 const QS = [
-    { 
-        q: "What did we buy the first time we met, and from where?", 
-        hint: "that first night outside... you remember.", 
-        type: "text", 
-        ans: ["farmaaish", "12:30", "lighter", "sutta"], 
-        clipart: "🚬 🔥", 
-        bgPattern: null, 
-        title: "The first night", 
-        sub: "APRIL 14 · 12:30AM · OPPOSITE FARMAAISH", 
-        msg: "Opposite Farmaaish at 12:30am. A lighter and two suttas. That's where it started on April 14th. Just seeing how it goes." 
-    },
-    { 
-        q: "Ganga Hamlet: Shampoo, Face Wash, Moisturizer?", 
-        hint: "the three brands in your bathroom...", 
-        type: "text", 
-        ans: ["loreal", "l'oreal", "l'oréal", "l'Oréal", "seba", "minimalist"], 
-        clipart: "🧴 🫧 🧴", 
-        bgPattern: null, 
-        title: "The details", 
-        sub: "GANGA HAMLET", 
-        msg: "Loreal Shampoo, Sebamed Facewash, and Minimalist moisturizer." 
-    },
-    { 
-        q: "Hotels in Chennai and Mumbai?", 
-        hint: "the ones we spent the night in...", 
-        type: "text", 
-        ans: ["spectra", "highway"], 
-        clipart: "🏖️ 🌊 🌇", 
-        img: "q3.jpeg", 
-        bgPattern: null, 
-        title: "Miles apart, but together", 
-        sub: "CHENNAI · MUMBAI", 
-        msg: "Hotel Kay-EM Spectra and Hotel Highway Inn. The distance never mattered when we were together." 
-    },
-    { 
-        q: "What is the brand from which we got your ring and the cross pendant?", 
-        hint: "think dainty and silver...", 
-        type: "text", 
-        ans: ["caliber", "calib", "calibe", "callib", "calleb", "caliberee", "caliberiee", "calibre", "caliberie", "celib"], 
-        clipart: "💍 ✨ ✝️", 
-        img: "q4.jpeg", 
-        bgPattern: "💍 ✝️", 
-        title: "The Silver Pieces", 
-        sub: "A RING AND A CROSS", 
-        msg: "Caliberiee Jewellery. Beautiful, dainty, and chosen especially for you." 
-    },
-    { 
-        q: "Name 3 current Barça players.", 
-        hint: "any 3 from the current squad...", 
-        type: "text", 
-        ans: ["pedri", "yamal", "gavi", "olmo", "raphinha", "lewandowski", "cubarsi", "balde", "kounde"], 
-        clipart: "🔴🔵 ⚽ 🏟️ 🏆 🐐", 
-        bgPattern: null, 
-        title: "True Love", 
-        sub: "VISCA EL BARÇA", 
-        msg: "You put up with my football obsession. That's how I know it's real." 
-    },
-    { 
-        q: "Match the gifts to the timeline:", 
-        hint: "drag and drop them in order...", 
-        type: "drag", 
-        correct: ["Pink Pipe", "Zara Dress", "Stanley Sipper", "Lego Ferrari", "Cross Necklace"], 
-        months: ["April", "July", "August", "January", "February"], 
-        icons: ["💨", "👗", "🥤", "🏎️", "✝️"], 
-        clipart: "💨 👗 🥤 🏎️ ✝️", 
-        bgPattern: "🎁", 
-        title: "A year of chosen memories", 
-        sub: "APRIL TO FEBRUARY", 
-        msg: "From a pink pipe in Goa to the cross in Mumbai. Every gift was a piece of us." 
-    },
-    { 
-        q: "Rank these gifts by your favorite:", 
-        hint: "drag your favorite to the top...", 
-        type: "drag", 
-        isFav: true, 
-        clipart: "💨 👗 🥤 🏎️ ✝️", 
-        bgPattern: "🎁", 
-        title: "The Favorites", 
-        sub: "EVERYTHING YOU LOVE", 
-        msg: "Whatever you picked, I'm glad you loved them. But you're the best gift I ever received." 
-    },
-    { 
-        q: "What is our motto?", 
-        hint: "you know this one...", 
-        type: "text", 
-        ans: ["doob before lube"], 
-        clipart: "🌿 💧 💦", 
-        bgPattern: null, 
-        title: "Our Motto", 
-        sub: "WORDS TO LIVE BY", 
-        msg: "Doob before lube. Exactly. 😉" 
-    }
+    { q: "What did we buy the first time we met, and from where?", hint: "that first night outside... you remember.", type: "text", ans: ["farmaaish", "12:30", "lighter", "sutta"], clipart: "🚬 🔥", bgPattern: null, title: "The first night", sub: "APRIL 14 · 12:30AM · OPPOSITE FARMAAISH", msg: "Opposite Farmaaish at 12:30am. A lighter and two suttas. That's where it started on April 14th. Just seeing how it goes." },
+    { q: "Ganga Hamlet: Shampoo, Face Wash, Moisturizer?", hint: "the three brands in your bathroom...", type: "text", ans: ["loreal", "l'oreal", "l'oréal", "l'Oréal", "seba", "minimalist"], clipart: "🧴 🫧 🧴", bgPattern: null, title: "The details", sub: "GANGA HAMLET", msg: "Loreal Shampoo, Sebamed Facewash, and Minimalist moisturizer." },
+    { q: "Hotels in Chennai and Mumbai?", hint: "the ones we spent the night in...", type: "text", ans: ["spectra", "highway"], clipart: "🏖️ 🌊 🌇", img: "q3.jpeg", bgPattern: null, title: "Miles apart, but together", sub: "CHENNAI · MUMBAI", msg: "Hotel Kay-EM Spectra and Hotel Highway Inn. The distance never mattered when we were together." },
+    { q: "What is the brand from which we got your ring and the cross pendant?", hint: "think dainty and silver...", type: "text", ans: ["caliber", "calib", "calibe", "callib", "calleb", "caliberee", "caliberiee", "calibre", "caliberie", "celib"], clipart: "💍 ✨ ✝️", img: "q4.jpeg", bgPattern: "💍 ✝️", title: "The Silver Pieces", sub: "A RING AND A CROSS", msg: "Caliberiee Jewellery. Beautiful, dainty, and chosen especially for you." },
+    { q: "Name 3 current Barça players.", hint: "any 3 from the current squad...", type: "text", ans: ["pedri", "yamal", "gavi", "olmo", "raphinha", "lewandowski", "cubarsi", "balde", "kounde"], clipart: "🔴🔵 ⚽ 🏟️ 🏆 🐐", bgPattern: null, title: "True Love", sub: "VISCA EL BARÇA", msg: "You put up with my football obsession. That's how I know it's real." },
+    { q: "Match the gifts to the timeline:", hint: "drag and drop them in order...", type: "drag", correct: ["Pink Pipe", "Zara Dress", "Stanley Sipper", "Lego Ferrari", "Cross Necklace"], months: ["April", "July", "August", "January", "February"], icons: ["💨", "👗", "🥤", "🏎️", "✝️"], clipart: "💨 👗 🥤 🏎️ ✝️", bgPattern: "🎁", title: "A year of chosen memories", sub: "APRIL TO FEBRUARY", msg: "From a pink pipe in Goa to the cross in Mumbai. Every gift was a piece of us." },
+    { q: "Rank these gifts by your favorite:", hint: "drag your favorite to the top...", type: "drag", isFav: true, clipart: "💨 👗 🥤 🏎️ ✝️", bgPattern: "🎁", title: "The Favorites", sub: "EVERYTHING YOU LOVE", msg: "Whatever you picked, I'm glad you loved them. But you're the best gift I ever received." },
+    { q: "What is our motto?", hint: "you know this one...", type: "text", ans: ["doob before lube"], clipart: "🌿 💧 💦", bgPattern: null, title: "Our Motto", sub: "WORDS TO LIVE BY", msg: "Doob before lube. Exactly. 😉" }
 ];
 
 const qBox = document.getElementById('qContainer');
 QS.forEach((q, i) => {
-    const n = i + 1; 
-    const div = document.createElement('div'); 
-    div.className = 'screen'; 
-    div.id = 's' + n;
-    
-    let interaction = '';
-    if (q.type === "text") {
-        interaction = `<input type="text" class="q-input" id="inp${n}" placeholder="your answer..." onkeydown="if(event.key==='Enter')submit(${n})">`;
-    } else {
+    const n = i + 1; const div = document.createElement('div'); div.className = 'screen'; div.id = 's' + n;
+    let interaction = q.type === "text" ? `<input type="text" class="q-input" id="inp${n}" placeholder="your answer..." onkeydown="if(event.key==='Enter')submit(${n})">` : (() => {
         const items = q.isFav ? ["Cross Necklace", "Zara Dress", "Stanley Sipper", "Lego Ferrari", "Pink Pipe"] : [...q.correct].sort(() => Math.random() - 0.5);
         const iconMap = {"Pink Pipe":"💨", "Zara Dress":"👗", "Stanley Sipper":"🥤", "Lego Ferrari":"🏎️", "Cross Necklace":"✝️"};
-        interaction = `<div class="timeline-ui">${q.months ? `<div class="month-col">${q.months.map(m=>`<div class="month-lbl">${m}</div>`).join('')}</div>`:''}<div class="drop-zone" id="dz${n}">${items.map(it=>`<div class="drag-card" draggable="true"><span>${it}</span><span style="font-size: 1.3rem;">${iconMap[it]||'🎁'}</span></div>`).join('')}</div></div>`;
-    }
+        return `<div class="timeline-ui">${q.months ? `<div class="month-col">${q.months.map(m=>`<div class="month-lbl">${m}</div>`).join('')}</div>`:''}<div class="drop-zone" id="dz${n}">${items.map(it=>`<div class="drag-card" draggable="true"><span>${it}</span><span style="font-size: 1.3rem;">${iconMap[it]||'🎁'}</span></div>`).join('')}</div></div>`;
+    })();
 
-    let bgPatternHtml = '';
-    if (q.bgPattern) {
-        bgPatternHtml = `<div class="bg-pattern">${q.bgPattern.repeat(30)}</div>`;
-    }
-    
-    let revBoxContent = '';
-    let boxStyle = '';
-    
-    if (q.img) {
-        revBoxContent = `
-            <div style="width: 100%; aspect-ratio: 4/3; overflow: hidden; border-radius: 8px; margin-bottom: 12px; background: var(--photo-bg);">
-                <img src="${q.img}" style="width: 100%; height: 100%; object-fit: cover;">
-            </div>
-            <div class="rev-clipart" style="margin-bottom: 5px; font-size: 2.5rem;">${q.clipart}</div>
-        `;
-        boxStyle = 'background: white; padding: 12px 12px 20px 12px; box-shadow: 0 15px 35px rgba(138,40,64,0.1); transform: rotate(-1deg);';
-    } else {
-        revBoxContent = `
-            <div class="rev-clipart">${q.clipart}</div>
-            <div class="rev-photo-title">${q.title}</div>
-            <div class="rev-photo-sub">${q.sub}</div>
-        `;
-    }
+    let bgPatternHtml = q.bgPattern ? `<div class="bg-pattern">${q.bgPattern.repeat(30)}</div>` : '';
+    let revBoxContent = q.img 
+        ? `<div style="width: 100%; aspect-ratio: 4/3; overflow: hidden; border-radius: 8px; margin-bottom: 12px; background: var(--photo-bg);"><img src="${q.img}" style="width: 100%; height: 100%; object-fit: cover;"></div><div class="rev-clipart" style="margin-bottom: 5px; font-size: 2.5rem;">${q.clipart}</div>`
+        : `<div class="rev-clipart">${q.clipart}</div><div class="rev-photo-title">${q.title}</div><div class="rev-photo-sub">${q.sub}</div>`;
+    let boxStyle = q.img ? 'background: white; padding: 12px 12px 20px 12px; box-shadow: 0 15px 35px rgba(138,40,64,0.1); transform: rotate(-1deg);' : '';
 
-    div.innerHTML = `
-    <div class="q-wrap" id="qw${n}">
-        <div class="q-card">
-            <div class="q-watermark">${n}</div>
-            <div class="q-header">
-                <span class="q-num">${n}</span>
-                <h3 class="q-text">${q.q}</h3>
-            </div>
-            <p class="q-hint">${q.hint}</p>
-            ${interaction}
-            <button class="btn-unlock" onclick="submit(${n})">Unlock this memory →</button>
-        </div>
-    </div>
-    
-    <div class="rev-wrap" id="rv${n}">
-        ${bgPatternHtml}
-        <div class="step-indicator">${n} / ${QS.length}</div>
-        
-        <div class="rev-photo-box" style="${boxStyle}">
-            ${revBoxContent}
-        </div>
-        
-        <h2 class="rev-title" style="${q.img ? 'display: none;' : ''}">${q.title}</h2>
-        <p class="rev-subtitle" style="${q.img ? 'display: none;' : ''}">${q.sub}</p>
-        
-        <div class="rev-msg-box">${q.msg}</div>
-        
-        <button class="btn-next" onclick="goTo(${n+1})">${n === QS.length ? 'Finish the maze →' : 'next memory →'}</button>
-    </div>`;
+    div.innerHTML = `<div class="q-wrap" id="qw${n}"><div class="q-card"><div class="q-watermark">${n}</div><div class="q-header"><span class="q-num">${n}</span><h3 class="q-text">${q.q}</h3></div><p class="q-hint">${q.hint}</p>${interaction}<button class="btn-unlock" onclick="submit(${n})">Unlock this memory →</button></div></div><div class="rev-wrap" id="rv${n}">${bgPatternHtml}<div class="step-indicator">${n} / ${QS.length}</div><div class="rev-photo-box" style="${boxStyle}">${revBoxContent}</div><h2 class="rev-title" style="${q.img ? 'display: none;' : ''}">${q.title}</h2><p class="rev-subtitle" style="${q.img ? 'display: none;' : ''}">${q.sub}</p><div class="rev-msg-box">${q.msg}</div><button class="btn-next" onclick="goTo(${n+1})">${n === QS.length ? 'Finish the maze →' : 'next memory →'}</button></div>`;
     qBox.appendChild(div);
 });
 
@@ -681,364 +570,122 @@ const FQS = [
 
 const fBox = document.getElementById('fContainer');
 FQS.forEach((fq, i) => {
-    const n = i + 1; 
-    const div = document.createElement('div'); 
-    div.className = 'screen'; 
-    div.id = 'sFeedback' + n;
-    
-    let interaction = '';
-    
-    if(fq.type === "short") {
-        interaction = `<input type="text" class="q-input" id="fbInp${n}" style="text-align:left;" placeholder="Your answer..." onkeydown="if(event.key==='Enter')submitF(${n}, this)">`;
-    } else if(fq.type === "mcq") {
-        interaction = `<div id="fbGrp${n}">` + fq.opts.map(opt => `<button class="fb-opt" onclick="toggleSel(this, 'fbGrp${n}')" data-val="${opt}">${opt}</button>`).join('') + `</div>`;
-    } else if(fq.type === "likert") {
-        interaction = `<div class="likert-box" id="fbGrp${n}">${[1,2,3,4,5].map(num => `<div class="likert-dot" onclick="toggleSel(this, 'fbGrp${n}')" data-val="${num}">${num}</div>`).join('')}</div>
-        <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--muted); text-transform:uppercase; margin-bottom:1rem;"><span>Strongly Disagree</span><span>Strongly Agree</span></div>`;
-    } else if(fq.type === "grid") {
-        interaction = `<div id="fbGrp${n}">` + fq.items.map((item, idx) => `<div class="grid-row"><span class="grid-lbl">${item}</span><div class="grid-btns" id="fbGridRow${n}_${idx}"><button class="grid-btn" onclick="toggleSel(this, 'fbGridRow${n}_${idx}')" data-val="${item}: You">You</button><button class="grid-btn" onclick="toggleSel(this, 'fbGridRow${n}_${idx}')" data-val="${item}: Me">Me</button></div></div>`).join('') + `</div>`;
-    }
-
-    div.innerHTML = `
-        <div class="q-card" style="max-width: 600px; position: relative;">
-            <div class="q-watermark">${n}</div>
-            <button class="back-icon" onclick="goBackF(${n})">←</button>
-            <h2 class="fb-sec-title">${fq.sec}</h2>
-            <h3 class="q-text" style="font-size:1.4rem; font-family:'Inter'; font-style:normal; margin-bottom:2rem;">${fq.q}</h3>
-            ${interaction}
-            <button class="btn-unlock" style="margin-top:2rem;" onclick="submitF(${n}, this)">${n === FQS.length ? 'Send to Tanay ❤️' : 'Next'}</button>
-        </div>
-    `;
+    const n = i + 1; const div = document.createElement('div'); div.className = 'screen'; div.id = 'sFeedback' + n;
+    let interaction = fq.type === "short" ? `<input type="text" class="q-input" id="fbInp${n}" style="text-align:left;" placeholder="Your answer..." onkeydown="if(event.key==='Enter')submitF(${n}, this)">` : fq.type === "mcq" ? `<div id="fbGrp${n}">` + fq.opts.map(opt => `<button class="fb-opt" onclick="toggleSel(this, 'fbGrp${n}')" data-val="${opt}">${opt}</button>`).join('') + `</div>` : fq.type === "likert" ? `<div class="likert-box" id="fbGrp${n}">${[1,2,3,4,5].map(num => `<div class="likert-dot" onclick="toggleSel(this, 'fbGrp${n}')" data-val="${num}">${num}</div>`).join('')}</div><div style="display:flex; justify-content:space-between; font-size:10px; color:var(--muted); text-transform:uppercase; margin-bottom:1rem;"><span>Strongly Disagree</span><span>Strongly Agree</span></div>` : `<div id="fbGrp${n}">` + fq.items.map((item, idx) => `<div class="grid-row"><span class="grid-lbl">${item}</span><div class="grid-btns" id="fbGridRow${n}_${idx}"><button class="grid-btn" onclick="toggleSel(this, 'fbGridRow${n}_${idx}')" data-val="${item}: You">You</button><button class="grid-btn" onclick="toggleSel(this, 'fbGridRow${n}_${idx}')" data-val="${item}: Me">Me</button></div></div>`).join('') + `</div>`;
+    div.innerHTML = `<div class="q-card" style="max-width: 600px; position: relative;"><div class="q-watermark">${n}</div><button class="back-icon" onclick="goBackF(${n})">←</button><h2 class="fb-sec-title">${fq.sec}</h2><h3 class="q-text" style="font-size:1.4rem; font-family:'Inter'; font-style:normal; margin-bottom:2rem;">${fq.q}</h3>${interaction}<button class="btn-unlock" style="margin-top:2rem;" onclick="submitF(${n}, this)">${n === FQS.length ? 'Send to Tanay ❤️' : 'Next'}</button></div>`;
     fBox.appendChild(div);
 });
 
-function toggleSel(btn, grpId) { 
-    const group = document.getElementById(grpId); 
-    if(btn.classList.contains('selected')) { 
-        btn.classList.remove('selected'); 
-    } else { 
-        group.querySelectorAll('.selected').forEach(el => el.classList.remove('selected')); 
-        btn.classList.add('selected'); 
-    } 
-}
-
-function goBackF(n) { 
-    if(n === 1) {
-        goTo('sFinal'); 
-    } else {
-        goTo('sFeedback' + (n - 1)); 
-    }
-}
+function toggleSel(btn, grpId) { const group = document.getElementById(grpId); if(btn.classList.contains('selected')) { btn.classList.remove('selected'); } else { group.querySelectorAll('.selected').forEach(el => el.classList.remove('selected')); btn.classList.add('selected'); } }
+function goBackF(n) { if(n === 1) goTo('sDeepDiveMenu'); else goTo('sFeedback' + (n - 1)); }
 
 function submitF(n, btn) {
-    const fq = FQS[n-1]; 
-    let answer = "";
-    
-    if(fq.type === "short") { 
-        answer = document.getElementById('fbInp'+n).value.trim(); 
-        if(!answer) return alert("Please write something baby ❤️"); 
-    } 
-    else if(fq.type === "grid") { 
-        const rows = document.querySelectorAll(`#fbGrp${n} .grid-btns`); 
-        let gridAns = []; 
-        let missing = false; 
-        rows.forEach(r => { 
-            const sel = r.querySelector('.selected'); 
-            if(!sel) missing = true; 
-            else gridAns.push(sel.getAttribute('data-val')); 
-        }); 
-        if(missing) return alert("Please select an option for all rows ❤️"); 
-        answer = gridAns.join(" | "); 
-    } 
-    else { 
-        const sel = document.querySelector(`#fbGrp${n} .selected`); 
-        if(!sel) return alert("Please select an option baby ❤️"); 
-        answer = sel.getAttribute('data-val'); 
-    }
-    
+    const fq = FQS[n-1]; let answer = "";
+    if(fq.type === "short") { answer = document.getElementById('fbInp'+n).value.trim(); if(!answer) return alert("Please write something baby ❤️"); } 
+    else if(fq.type === "grid") { const rows = document.querySelectorAll(`#fbGrp${n} .grid-btns`); let gridAns = []; let missing = false; rows.forEach(r => { const sel = r.querySelector('.selected'); if(!sel) missing = true; else gridAns.push(sel.getAttribute('data-val')); }); if(missing) return alert("Please select an option for all rows ❤️"); answer = gridAns.join(" | "); } 
+    else { const sel = document.querySelector(`#fbGrp${n} .selected`); if(!sel) return alert("Please select an option baby ❤️"); answer = sel.getAttribute('data-val'); }
     fbAnswers[`Q${n}: ${fq.q}`] = answer;
-    
-    if(n === FQS.length) { 
-        sendFeedback(btn); 
-    } else { 
-        goTo('sFeedback' + (n+1)); 
-    }
+    if(n === FQS.length) { sendFeedback(btn); } else { goTo('sFeedback' + (n+1)); }
 }
 
 /* ─── SILENT EMAIL VIA WEB3FORMS ─── */
 async function sendThoughts(btn) {
-    const text = document.getElementById('myThoughts').value.trim(); 
-    if(!text) return alert("Write something first baby ❤️");
-    
-    const originalText = btn.innerText; 
-    btn.innerText = "Sending... ✨";
-    
-    try { 
-        await fetch("https://api.web3forms.com/submit", { 
-            method: "POST", 
-            headers: { "Content-Type": "application/json", "Accept": "application/json" }, 
-            body: JSON.stringify({ 
-                access_key: WEB3FORMS_KEY, 
-                subject: "💌 New Letter from Dhrithi!", 
-                message: text 
-            }) 
-        }); 
-        alert("Saved in my heart ❤️"); 
-    } catch (error) { 
-        alert("Oops, something went wrong. But I still love you! ❤️"); 
-    }
-    
-    btn.innerText = originalText; 
-    goTo('sFinal');
+    const text = document.getElementById('myThoughts').value.trim(); if(!text) return alert("Write something first baby ❤️");
+    const originalText = btn.innerText; btn.innerText = "Sending... ✨";
+    try { await fetch("https://api.web3forms.com/submit", { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify({ access_key: WEB3FORMS_KEY, subject: "💌 New Letter from Dhrithi!", message: text }) }); alert("Saved in my heart ❤️"); } catch (error) { alert("Oops, something went wrong. But I still love you! ❤️"); }
+    btn.innerText = originalText; goTo('sDeepDiveMenu');
 }
 
 async function sendFeedback(btn) {
-    const originalText = btn ? btn.innerText : "Send to Tanay ❤️"; 
-    if(btn) btn.innerText = "Sending to Tanay... ✨";
-    
-    let formattedAnswers = ""; 
-    for(const [q, a] of Object.entries(fbAnswers)) { 
-        formattedAnswers += `<b>${q}</b><br>👉 ${a}<br><br>`; 
-    }
-    
-    try { 
-        await fetch("https://api.web3forms.com/submit", { 
-            method: "POST", 
-            headers: { "Content-Type": "application/json", "Accept": "application/json" }, 
-            body: JSON.stringify({ 
-                access_key: WEB3FORMS_KEY, 
-                subject: "📊 Dhrithi's Annual Performance Review", 
-                message: formattedAnswers 
-            }) 
-        }); 
-        alert("Feedback received. Thank you baby ❤️"); 
-    } catch (error) { 
-        alert("Oops, something went wrong. But I still love you! ❤️"); 
-    }
-    
-    if(btn) btn.innerText = originalText; 
-    goTo('sFinal');
+    const originalText = btn ? btn.innerText : "Send to Tanay ❤️"; if(btn) btn.innerText = "Sending to Tanay... ✨";
+    let formattedAnswers = ""; for(const [q, a] of Object.entries(fbAnswers)) { formattedAnswers += `<b>${q}</b><br>👉 ${a}<br><br>`; }
+    try { await fetch("https://api.web3forms.com/submit", { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify({ access_key: WEB3FORMS_KEY, subject: "📊 Dhrithi's Annual Performance Review", message: formattedAnswers }) }); alert("Feedback received. Thank you baby ❤️"); } catch (error) { alert("Oops, something went wrong. But I still love you! ❤️"); }
+    if(btn) btn.innerText = originalText; goTo('sDeepDiveMenu');
 }
 
 /* ─── CINEMATIC TRANSITIONS ─── */
 function goTo(n) {
     const activeScreen = document.querySelector('.screen.active'); 
-    let targetId = '';
-    
-    if (typeof n === 'number') {
-        targetId = n > QS.length ? 'sCeleb' : 's' + n;
-    } else {
-        targetId = n;
-    }
-    
+    let targetId = typeof n === 'number' ? (n > QS.length ? 'sCeleb' : 's' + n) : n;
     if (activeScreen) { 
-        activeScreen.classList.remove('active'); 
-        activeScreen.classList.add('fade-out'); 
-        setTimeout(() => { 
-            activeScreen.style.display = 'none'; 
-            activeScreen.classList.remove('fade-out'); 
-            showScreen(targetId); 
-        }, 500); 
-    } else { 
-        showScreen(targetId); 
-    }
-    
-    if(typeof n === 'number' && n <= QS.length) { 
-        document.getElementById('progressBar').style.width = ((n-1)/QS.length)*100 + '%'; 
-    } else if (targetId === 'sCeleb' || targetId === 'sFinal') { 
-        document.getElementById('progressBar').style.width = '100%'; 
-    }
+        activeScreen.classList.remove('active'); activeScreen.classList.add('fade-out'); 
+        setTimeout(() => { activeScreen.style.display = 'none'; activeScreen.classList.remove('fade-out'); showScreen(targetId); }, 500); 
+    } else { showScreen(targetId); }
+    if(typeof n === 'number' && n <= QS.length) { document.getElementById('progressBar').style.width = ((n-1)/QS.length)*100 + '%'; } 
+    else if (targetId === 'sCeleb' || targetId === 'sFinal' || targetId === 'sGamesMenu' || targetId === 'sDeepDiveMenu') { document.getElementById('progressBar').style.width = '100%'; }
 }
-
 function showScreen(id) { 
-    const target = document.getElementById(id); 
-    target.style.display = 'flex'; 
-    setTimeout(() => { target.classList.add('active'); }, 50); 
-    window.scrollTo(0, 0); 
+    const target = document.getElementById(id); target.style.display = 'flex'; 
+    setTimeout(() => { target.classList.add('active'); }, 50); window.scrollTo(0, 0); 
     sessionStorage.setItem('currentScreen', id); 
 }
 
 function submit(n) {
-    const q = QS[n-1]; 
-    let ok = false;
-    
-    if(q.type === "text") { 
-        const v = document.getElementById('inp'+n).value.toLowerCase(); 
-        ok = q.ans.some(a => v.includes(a)); 
-    } 
-    else if(q.isFav) { 
-        ok = true; 
-    } 
-    else { 
-        const cur = [...document.querySelectorAll(`#dz${n} .drag-card span:first-child`)].map(x => x.innerText); 
-        ok = JSON.stringify(cur) === JSON.stringify(q.correct); 
-    }
-    
-    if(ok) { 
-        document.querySelector(`#s${n} .q-wrap`).style.display = 'none'; 
-        document.getElementById('rv'+n).classList.add('show'); 
-    } else { 
-        alert("Try again, baby. ❤️"); 
-    }
+    const q = QS[n-1]; let ok = false;
+    if(q.type === "text") { const v = document.getElementById('inp'+n).value.toLowerCase(); ok = q.ans.some(a => v.includes(a)); } 
+    else if(q.isFav) { ok = true; } 
+    else { const cur = [...document.querySelectorAll(`#dz${n} .drag-card span:first-child`)].map(x => x.innerText); ok = JSON.stringify(cur) === JSON.stringify(q.correct); }
+    if(ok) { document.querySelector(`#s${n} .q-wrap`).style.display = 'none'; document.getElementById('rv'+n).classList.add('show'); } else { alert("Try again, baby. ❤️"); }
 }
 
 /* ─── DRAG EVENTS ─── */
-document.addEventListener('touchstart', e => { 
-    const card = e.target.closest('.drag-card'); 
-    if(card) card.classList.add('dragging'); 
-}, {passive: true});
-
-document.addEventListener('touchmove', e => { 
-    const dragging = document.querySelector('.dragging'); 
-    if(!dragging) return; 
-    e.preventDefault(); 
-    const touch = e.touches[0]; 
-    const zone = dragging.closest('.drop-zone'); 
-    if(!zone) return; 
-    const after = [...zone.querySelectorAll('.drag-card:not(.dragging)')].find(c => touch.clientY < c.getBoundingClientRect().top + c.getBoundingClientRect().height/2); 
-    if(!after) zone.appendChild(dragging); else zone.insertBefore(dragging, after); 
-}, {passive: false});
-
-document.addEventListener('touchend', e => { 
-    const dragging = document.querySelector('.dragging'); 
-    if(dragging) dragging.classList.remove('dragging'); 
-});
-
-document.addEventListener('dragstart', e => { 
-    if(e.target.classList.contains('drag-card')) e.target.classList.add('dragging'); 
-});
-
-document.addEventListener('dragend', e => { 
-    if(e.target.classList.contains('drag-card')) e.target.classList.remove('dragging'); 
-});
-
-document.addEventListener('dragover', e => { 
-    e.preventDefault(); 
-    const zone = e.target.closest('.drop-zone'); 
-    if(!zone) return; 
-    const dragging = document.querySelector('.dragging'); 
-    const after = [...zone.querySelectorAll('.drag-card:not(.dragging)')].find(c => e.clientY < c.getBoundingClientRect().top + c.getBoundingClientRect().height/2); 
-    if(!after) zone.appendChild(dragging); else zone.insertBefore(dragging, after); 
-});
+document.addEventListener('touchstart', e => { const card = e.target.closest('.drag-card'); if(card) card.classList.add('dragging'); }, {passive: true});
+document.addEventListener('touchmove', e => { const dragging = document.querySelector('.dragging'); if(!dragging) return; e.preventDefault(); const touch = e.touches[0]; const zone = dragging.closest('.drop-zone'); if(!zone) return; const after = [...zone.querySelectorAll('.drag-card:not(.dragging)')].find(c => touch.clientY < c.getBoundingClientRect().top + c.getBoundingClientRect().height/2); if(!after) zone.appendChild(dragging); else zone.insertBefore(dragging, after); }, {passive: false});
+document.addEventListener('touchend', e => { const dragging = document.querySelector('.dragging'); if(dragging) dragging.classList.remove('dragging'); });
+document.addEventListener('dragstart', e => { if(e.target.classList.contains('drag-card')) e.target.classList.add('dragging'); });
+document.addEventListener('dragend', e => { if(e.target.classList.contains('drag-card')) e.target.classList.remove('dragging'); });
+document.addEventListener('dragover', e => { e.preventDefault(); const zone = e.target.closest('.drop-zone'); if(!zone) return; const dragging = document.querySelector('.dragging'); const after = [...zone.querySelectorAll('.drag-card:not(.dragging)')].find(c => e.clientY < c.getBoundingClientRect().top + c.getBoundingClientRect().height/2); if(!after) zone.appendChild(dragging); else zone.insertBefore(dragging, after); });
 
 /* ─── NEW GAMES LOGIC ─── */
 
 // 1. PUZZLE GAME (3x3)
-let puzzleSelected = null; 
-const pSize = 3;
-
+let puzzleSelected = null; const pSize = 3;
 function initPuzzle() {
-    const board = document.getElementById('puzzleBoard'); 
-    board.innerHTML = ''; 
-    board.classList.remove('solved'); 
-    document.getElementById('puzzleSuccess').style.display = 'none';
-    
+    const board = document.getElementById('puzzleBoard'); board.innerHTML = ''; board.classList.remove('solved'); document.getElementById('puzzleSuccess').style.display = 'none';
     let pieces = [...Array(pSize * pSize).keys()];
-    
-    for (let i = pieces.length - 1; i > 0; i--) { 
-        const j = Math.floor(Math.random() * (i + 1)); 
-        [pieces[i], pieces[j]] = [pieces[j], pieces[i]]; 
-    }
-    
+    for (let i = pieces.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pieces[i], pieces[j]] = [pieces[j], pieces[i]]; }
     pieces.forEach((p, idx) => {
-        const div = document.createElement('div'); 
-        div.className = 'puzzle-piece'; 
-        div.dataset.correct = p; 
-        div.dataset.current = idx;
-        
-        let row = Math.floor(p / pSize); 
-        let col = p % pSize;
-        
+        const div = document.createElement('div'); div.className = 'puzzle-piece'; div.dataset.correct = p; div.dataset.current = idx;
+        let row = Math.floor(p / pSize); let col = p % pSize;
         div.style.backgroundPosition = `${col * (100 / (pSize - 1))}% ${row * (100 / (pSize - 1))}%`;
-        div.onclick = () => handlePuzzleClick(div); 
-        board.appendChild(div);
+        div.onclick = () => handlePuzzleClick(div); board.appendChild(div);
     });
-
-    loadImg('puzzle', (src) => {
-        document.querySelectorAll('.puzzle-piece').forEach(el => {
-            el.style.backgroundImage = `url('${src}')`;
-        });
-    });
+    loadImg('puzzle', (src) => { document.querySelectorAll('.puzzle-piece').forEach(el => { el.style.backgroundImage = `url('${src}')`; }); });
 }
-
 function handlePuzzleClick(div) {
     if(puzzleSelected) {
-        const tempBg = puzzleSelected.style.backgroundPosition; 
-        const tempCor = puzzleSelected.dataset.correct;
-        
-        puzzleSelected.style.backgroundPosition = div.style.backgroundPosition; 
-        puzzleSelected.dataset.correct = div.dataset.correct;
-        
-        div.style.backgroundPosition = tempBg; 
-        div.dataset.correct = tempCor;
-        
-        puzzleSelected.classList.remove('selected'); 
-        puzzleSelected = null; 
-        checkPuzzleWin();
-    } else { 
-        puzzleSelected = div; 
-        div.classList.add('selected'); 
-    }
+        const tempBg = puzzleSelected.style.backgroundPosition; const tempCor = puzzleSelected.dataset.correct;
+        puzzleSelected.style.backgroundPosition = div.style.backgroundPosition; puzzleSelected.dataset.correct = div.dataset.correct;
+        div.style.backgroundPosition = tempBg; div.dataset.correct = tempCor;
+        puzzleSelected.classList.remove('selected'); puzzleSelected = null; checkPuzzleWin();
+    } else { puzzleSelected = div; div.classList.add('selected'); }
 }
-
 function checkPuzzleWin() {
-    let win = true; 
-    document.querySelectorAll('.puzzle-piece').forEach(p => { 
-        if(p.dataset.correct !== p.dataset.current) win = false; 
-    });
-    
-    if(win) { 
-        document.getElementById('puzzleBoard').classList.add('solved'); 
-        document.getElementById('puzzleSuccess').style.display = 'block'; 
-    }
+    let win = true; document.querySelectorAll('.puzzle-piece').forEach(p => { if(p.dataset.correct !== p.dataset.current) win = false; });
+    if(win) { document.getElementById('puzzleBoard').classList.add('solved'); document.getElementById('puzzleSuccess').style.display = 'block'; }
 }
 
 // 2. MEMORY MATCH
-let flippedCards = []; 
-let matchedCount = 0;
-
+let flippedCards = []; let matchedCount = 0;
 function initMatch() {
-    const board = document.getElementById('matchBoard'); 
-    board.innerHTML = ''; 
-    matchedCount = 0; 
-    document.getElementById('matchSuccess').style.display = 'none';
-    
-    let cards = [1,1,2,2,3,3,4,4,5,5,6,6]; 
-    cards.sort(() => Math.random() - 0.5);
-    
+    const board = document.getElementById('matchBoard'); board.innerHTML = ''; matchedCount = 0; document.getElementById('matchSuccess').style.display = 'none';
+    let cards = [1,1,2,2,3,3,4,4,5,5,6,6]; cards.sort(() => Math.random() - 0.5);
     cards.forEach(c => {
-        const div = document.createElement('div'); 
-        div.className = 'match-card'; 
-        div.dataset.val = c;
-        
+        const div = document.createElement('div'); div.className = 'match-card'; div.dataset.val = c;
         div.innerHTML = `<div class="card-inner"><div class="card-front">♡</div><div class="card-back"></div></div>`;
-        div.onclick = () => handleMatchClick(div); 
-        board.appendChild(div);
-
+        div.onclick = () => handleMatchClick(div); board.appendChild(div);
+        
         let base = (c === 4) ? 'match44' : 'match' + c;
-        loadImg(base, (src) => {
-            div.querySelector('.card-back').style.backgroundImage = `url('${src}')`;
-        });
+        loadImg(base, (src) => { div.querySelector('.card-back').style.backgroundImage = `url('${src}')`; });
     });
 }
-
 function handleMatchClick(div) {
     if(div.classList.contains('flipped') || flippedCards.length >= 2) return;
-    
-    div.classList.add('flipped'); 
-    flippedCards.push(div);
-    
+    div.classList.add('flipped'); flippedCards.push(div);
     if(flippedCards.length === 2) {
         setTimeout(() => {
-            if(flippedCards[0].dataset.val === flippedCards[1].dataset.val) { 
-                flippedCards[0].classList.add('matched'); 
-                flippedCards[1].classList.add('matched'); 
-                matchedCount++; 
-                if(matchedCount === 6) document.getElementById('matchSuccess').style.display = 'block'; 
-            } else { 
-                flippedCards[0].classList.remove('flipped'); 
-                flippedCards[1].classList.remove('flipped'); 
-            }
+            if(flippedCards[0].dataset.val === flippedCards[1].dataset.val) { flippedCards[0].classList.add('matched'); flippedCards[1].classList.add('matched'); matchedCount++; if(matchedCount === 6) document.getElementById('matchSuccess').style.display = 'block'; } 
+            else { flippedCards[0].classList.remove('flipped'); flippedCards[1].classList.remove('flipped'); }
             flippedCards = [];
         }, 1000);
     }
@@ -1046,124 +693,59 @@ function handleMatchClick(div) {
 
 // 3. CAPTCHA
 function initCaptcha() {
-    const board = document.getElementById('capBoard'); 
-    board.innerHTML = ''; 
-    document.getElementById('capSuccess').style.display = 'none'; 
-    document.querySelector('.btn-captcha').style.display = 'block';
-    
+    const board = document.getElementById('capBoard'); board.innerHTML = ''; document.getElementById('capSuccess').style.display = 'none'; document.querySelector('.btn-captcha').style.display = 'block';
     let caps = [1,2,3,4,5,6,7,8,9].sort(() => Math.random() - 0.5);
-    
     caps.forEach(c => {
-        const div = document.createElement('div'); 
-        div.className = 'cap-img-wrap';
-        
+        const div = document.createElement('div'); div.className = 'cap-img-wrap';
         div.innerHTML = `<img class="cap-img"><div class="cap-check">✓</div>`;
-        div.onclick = () => div.classList.toggle('selected'); 
-        board.appendChild(div);
-
-        loadImg('cap' + c, (src) => {
-            div.querySelector('.cap-img').src = src;
-        });
+        div.onclick = () => div.classList.toggle('selected'); board.appendChild(div);
+        loadImg('cap' + c, (src) => { div.querySelector('.cap-img').src = src; });
     });
 }
-
 function verifyCaptcha() {
     const selected = document.querySelectorAll('.cap-img-wrap.selected').length;
-    if(selected === 9) { 
-        document.getElementById('capSuccess').style.display = 'block'; 
-        document.querySelector('.btn-captcha').style.display = 'none'; 
-        document.querySelectorAll('.cap-img-wrap').forEach(w => w.onclick = null); 
-    } else { 
-        alert("Wait, are you saying some of these AREN'T the prettiest person on the planet?! Try again."); 
-    }
+    if(selected === 9) { document.getElementById('capSuccess').style.display = 'block'; document.querySelector('.btn-captcha').style.display = 'none'; document.querySelectorAll('.cap-img-wrap').forEach(w => w.onclick = null); } 
+    else { alert("Wait, are you saying some of these AREN'T the prettiest person on the planet?! Try again."); }
 }
 
 // 4. BURST SLIDER
 let burstSrcs = {};
 document.getElementById('burstSlider').addEventListener('input', function(e) { 
-    let val = e.target.value;
-    if(burstSrcs[val]) {
-        document.getElementById('burstDisplay').src = burstSrcs[val]; 
-    }
+    let val = e.target.value; if(burstSrcs[val]) { document.getElementById('burstDisplay').src = burstSrcs[val]; }
 });
-
 
 /* ─── LIVE CLOCK & INIT ─── */
 function initClocks() {
     const start = new Date('2025-04-14T00:30:00+05:30').getTime();
     setInterval(() => {
-        const d = Date.now() - start; 
-        const days = Math.floor(d / 86400000); 
-        const hours = Math.floor((d % 86400000) / 3600000); 
-        const mins = Math.floor((d % 3600000) / 60000); 
-        const secs = Math.floor((d % 60000) / 1000);
-        
-        document.querySelectorAll('.val-days').forEach(el => el.innerText = days.toLocaleString('en-IN')); 
-        document.querySelectorAll('.val-hours').forEach(el => el.innerText = hours.toLocaleString('en-IN')); 
-        document.querySelectorAll('.val-mins').forEach(el => el.innerText = mins.toLocaleString('en-IN')); 
-        document.querySelectorAll('.val-secs').forEach(el => el.innerText = secs.toLocaleString('en-IN'));
+        const d = Date.now() - start; const days = Math.floor(d / 86400000); const hours = Math.floor((d % 86400000) / 3600000); const mins = Math.floor((d % 3600000) / 60000); const secs = Math.floor((d % 60000) / 1000);
+        document.querySelectorAll('.val-days').forEach(el => el.innerText = days.toLocaleString('en-IN')); document.querySelectorAll('.val-hours').forEach(el => el.innerText = hours.toLocaleString('en-IN')); document.querySelectorAll('.val-mins').forEach(el => el.innerText = mins.toLocaleString('en-IN')); document.querySelectorAll('.val-secs').forEach(el => el.innerText = secs.toLocaleString('en-IN'));
     }, 1000);
-    
-    const nicks = { "Baby": 2558, "Babyy": 21, "Babyyy": 93, "Babyyyy": 56, "Babyyyyy": 12 }; 
-    const box = document.getElementById('statBox');
-    
-    if(box && box.children.length === 0) { 
-        Object.entries(nicks).forEach(([k,v]) => { 
-            box.innerHTML += `<div style="display:flex; justify-content:space-between; align-items:center; padding:18px 0; border-bottom:1px solid rgba(255,255,255,0.15); font-family:'Inter'; font-size:1.1rem;"><span>${k}</span><span style="color:var(--light-rose); font-weight:600; font-family:'Playfair Display'; font-size:1.4rem;">${v}</span></div>`; 
-        }); 
-    }
+    const nicks = { "Baby": 2558, "Babyy": 21, "Babyyy": 93, "Babyyyy": 56, "Babyyyyy": 12 }; const box = document.getElementById('statBox');
+    if(box && box.children.length === 0) { Object.entries(nicks).forEach(([k,v]) => { box.innerHTML += `<div style="display:flex; justify-content:space-between; align-items:center; padding:18px 0; border-bottom:1px solid rgba(255,255,255,0.15); font-family:'Inter'; font-size:1.1rem;"><span>${k}</span><span style="color:var(--light-rose); font-weight:600; font-family:'Playfair Display'; font-size:1.4rem;">${v}</span></div>`; }); }
 }
 
 (function(){
-    initClocks(); 
-    initPuzzle(); 
-    initMatch(); 
-    initCaptcha();
+    initClocks(); initPuzzle(); initMatch(); initCaptcha();
     
-    // Preload bursts through the smart loader
-    for(let i=1; i<=15; i++) { 
+    // Preload bursts (1 to 18) through the smart loader
+    for(let i=1; i<=18; i++) { 
         loadImg('burst' + i, (src) => { 
             burstSrcs[i] = src;
             if (i === 1) document.getElementById('burstDisplay').src = src;
         });
     } 
     
-    const pBox = document.getElementById('petals'); 
-    const favs = ['🎀','🎀','🌷','🌷','🍣','🍱','🥢','🍫','🍫']; 
-    const bg = document.getElementById('bg-elements');
-    
-    for(let i=0; i<35; i++){ 
-        const p = document.createElement('div'); 
-        p.className='petal'; 
-        p.style.cssText = `left:${Math.random()*100}%; width:14px; height:16px; background:#f7c5d5; animation-duration:${8+Math.random()*10}s; animation-delay:${Math.random()*5}s;`; 
-        pBox.appendChild(p); 
-    }
-    
-    for(let i=0; i<15; i++){ 
-        const icon = document.createElement('div'); 
-        icon.className='bg-icon'; 
-        icon.innerText = favs[Math.floor(Math.random()*favs.length)]; 
-        icon.style.cssText = `left:${Math.random()*100}%; top:${Math.random()*100}%; animation-delay:${Math.random()*5}s;`; 
-        bg.appendChild(icon); 
-    }
+    const pBox = document.getElementById('petals'); const favs = ['🎀','🎀','🌷','🌷','🍣','🍱','🥢','🍫','🍫']; const bg = document.getElementById('bg-elements');
+    for(let i=0; i<35; i++){ const p = document.createElement('div'); p.className='petal'; p.style.cssText = `left:${Math.random()*100}%; width:14px; height:16px; background:#f7c5d5; animation-duration:${8+Math.random()*10}s; animation-delay:${Math.random()*5}s;`; pBox.appendChild(p); }
+    for(let i=0; i<15; i++){ const icon = document.createElement('div'); icon.className='bg-icon'; icon.innerText = favs[Math.floor(Math.random()*favs.length)]; icon.style.cssText = `left:${Math.random()*100}%; top:${Math.random()*100}%; animation-delay:${Math.random()*5}s;`; bg.appendChild(icon); }
 
     // ─── RESTORE STATE ON REFRESH ───
     const savedScreen = sessionStorage.getItem('currentScreen');
     if (savedScreen && savedScreen !== 's0') {
-        const s0 = document.getElementById('s0'); 
-        s0.classList.remove('active'); 
-        s0.style.display = 'none'; 
-        showScreen(savedScreen);
-        
-        if (['sCeleb', 'sFinal', 'sMap', 'sWhatsApp', 'sThoughts', 'sLetter', 'sFeedbackIntro', 'sPuzzle', 'sMatch', 'sCaptcha', 'sBurst'].includes(savedScreen) || savedScreen.startsWith('sFeedback')) { 
-            document.getElementById('progressBar').style.width = '100%'; 
-        } 
-        else if (savedScreen.startsWith('s')) { 
-            let num = parseInt(savedScreen.substring(1)); 
-            if (!isNaN(num) && num <= QS.length) { 
-                document.getElementById('progressBar').style.width = ((num-1)/QS.length)*100 + '%'; 
-            } 
-        }
+        const s0 = document.getElementById('s0'); s0.classList.remove('active'); s0.style.display = 'none'; showScreen(savedScreen);
+        if (['sCeleb', 'sFinal', 'sGamesMenu', 'sDeepDiveMenu', 'sMap', 'sWhatsApp', 'sThoughts', 'sLetter', 'sFeedbackIntro', 'sPuzzle', 'sMatch', 'sCaptcha', 'sBurst'].includes(savedScreen) || savedScreen.startsWith('sFeedback')) { document.getElementById('progressBar').style.width = '100%'; } 
+        else if (savedScreen.startsWith('s')) { let num = parseInt(savedScreen.substring(1)); if (!isNaN(num) && num <= QS.length) { document.getElementById('progressBar').style.width = ((num-1)/QS.length)*100 + '%'; } }
     }
 })();
 </script>
