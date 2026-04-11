@@ -169,10 +169,10 @@ body {
 .game-container { width: 100%; max-width: 450px; margin: 1.5rem auto; display: none; flex-direction: column; align-items: center;}
 .game-container.active { display: flex; }
 
-/* 1. Puzzle (4x4) */
-.puzzle-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; width: 100%; aspect-ratio: 1/1; background: var(--line); border: 2px solid var(--rose); border-radius: 12px; overflow: hidden; box-shadow: 0 15px 30px rgba(0,0,0,0.05);}
+/* 1. Puzzle (3x3) */
+.puzzle-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; width: 100%; aspect-ratio: 1/1; background: var(--line); border: 2px solid var(--rose); border-radius: 12px; overflow: hidden; box-shadow: 0 15px 30px rgba(0,0,0,0.05);}
 .puzzle-grid.solved { gap: 0; border-color: var(--pink); box-shadow: 0 0 20px rgba(200,80,110,0.4); pointer-events: none;}
-.puzzle-piece { width: 100%; height: 100%; background-image: url('puzzle.jpeg'); background-size: 400% 400%; cursor: none; transition: transform 0.2s, filter 0.2s; }
+.puzzle-piece { width: 100%; height: 100%; background-image: url('puzzle.jpeg'); background-size: 300% 300%; cursor: none; transition: transform 0.2s, filter 0.2s; }
 .puzzle-piece.selected { transform: scale(0.92); filter: brightness(1.2); outline: 3px solid var(--pink); z-index: 10; border-radius: 4px;}
 
 /* 2. Memory Match (3x4) */
@@ -204,11 +204,9 @@ body {
 .burst-slider:hover { opacity: 1; }
 .burst-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 25px; height: 25px; border-radius: 50%; background: var(--pink); cursor: none; box-shadow: 0 0 10px rgba(200,80,110,0.5);}
 
-
 /* ─── MAP & FEEDBACK UI ─── */
 .map-container { position: relative; width: 100%; max-width: 450px; aspect-ratio: 1 / 1.5; margin: 2rem auto; background: var(--photo-bg); border-radius: 30px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.05); border: 1px solid var(--line); }
 .map-img { width: 100%; height: 100%; object-fit: contain; position: absolute; top: 0; left: 0; z-index: 1; opacity: 0.95; }
-
 .back-icon { position: absolute; top: 25px; left: 25px; background: transparent; border: none; font-size: 1.5rem; color: var(--muted); cursor: none; z-index: 10; transition: color 0.3s, transform 0.3s; }
 .back-icon:hover { color: var(--cranberry); transform: translateX(-3px); }
 .fb-sec-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--pink); font-style: italic; margin-bottom: 0.5rem; position: relative; z-index: 1; }
@@ -225,7 +223,6 @@ body {
 .grid-btn { padding: 8px 20px; border-radius: 20px; border: 1px solid var(--rose); background: white; color: var(--cranberry); font-size: 13px; font-weight: 600; cursor: none; transition: 0.2s;}
 .grid-btn:hover { background: var(--photo-bg); transform: translateY(-2px); }
 .grid-btn.selected { background: var(--pink); color: white; border-color: var(--cranberry); transform: scale(1.05); }
-
 .thoughts-area { width: 100%; height: 250px; border: 1px solid var(--line); border-radius: 20px; padding: 20px; font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; color: var(--cranberry); background: #fffafb; resize: none; outline: none; line-height: 1.6; transition: border-color 0.3s; }
 .thoughts-area:focus { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(200,80,110,0.1); }
 
@@ -904,9 +901,9 @@ document.addEventListener('dragover', e => {
 
 /* ─── NEW GAMES LOGIC ─── */
 
-// 1. PUZZLE GAME (4x4)
+// 1. PUZZLE GAME (3x3)
 let puzzleSelected = null; 
-const pSize = 4;
+const pSize = 3; // Switched back to 3x3 as requested
 
 function initPuzzle() {
     const board = document.getElementById('puzzleBoard'); 
@@ -968,7 +965,7 @@ function checkPuzzleWin() {
     }
 }
 
-// 2. MEMORY MATCH (MIXED .jpg and .jpeg files handled)
+// 2. MEMORY MATCH (MIXED .JPG and .jpeg files handled from user screenshot)
 let flippedCards = []; 
 let matchedCount = 0;
 
@@ -986,7 +983,8 @@ function initMatch() {
         div.className = 'match-card'; 
         div.dataset.val = c;
         
-        let ext = (c === 2 || c === 6) ? 'jpeg' : 'jpg'; 
+        // Handling the exact cases based on the provided GitHub screenshot
+        let ext = (c === 2 || c === 6) ? 'jpeg' : 'JPG'; 
         
         div.innerHTML = `<div class="card-inner"><div class="card-front">♡</div><div class="card-back" style="background-image: url('match${c}.${ext}');"></div></div>`;
         div.onclick = () => handleMatchClick(div); 
