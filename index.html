@@ -204,9 +204,11 @@ body {
 .burst-slider:hover { opacity: 1; }
 .burst-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 25px; height: 25px; border-radius: 50%; background: var(--pink); cursor: none; box-shadow: 0 0 10px rgba(200,80,110,0.5);}
 
+
 /* ─── MAP & FEEDBACK UI ─── */
 .map-container { position: relative; width: 100%; max-width: 450px; aspect-ratio: 1 / 1.5; margin: 2rem auto; background: var(--photo-bg); border-radius: 30px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.05); border: 1px solid var(--line); }
 .map-img { width: 100%; height: 100%; object-fit: contain; position: absolute; top: 0; left: 0; z-index: 1; opacity: 0.95; }
+
 .back-icon { position: absolute; top: 25px; left: 25px; background: transparent; border: none; font-size: 1.5rem; color: var(--muted); cursor: none; z-index: 10; transition: color 0.3s, transform 0.3s; }
 .back-icon:hover { color: var(--cranberry); transform: translateX(-3px); }
 .fb-sec-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--pink); font-style: italic; margin-bottom: 0.5rem; position: relative; z-index: 1; }
@@ -223,6 +225,7 @@ body {
 .grid-btn { padding: 8px 20px; border-radius: 20px; border: 1px solid var(--rose); background: white; color: var(--cranberry); font-size: 13px; font-weight: 600; cursor: none; transition: 0.2s;}
 .grid-btn:hover { background: var(--photo-bg); transform: translateY(-2px); }
 .grid-btn.selected { background: var(--pink); color: white; border-color: var(--cranberry); transform: scale(1.05); }
+
 .thoughts-area { width: 100%; height: 250px; border: 1px solid var(--line); border-radius: 20px; padding: 20px; font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; color: var(--cranberry); background: #fffafb; resize: none; outline: none; line-height: 1.6; transition: border-color 0.3s; }
 .thoughts-area:focus { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(200,80,110,0.1); }
 
@@ -359,7 +362,7 @@ body {
         
         <div class="game-container active">
             <div class="burst-container">
-                <img id="burstDisplay" src="burst1.jpeg" class="burst-img" alt="Burst Frame" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'100%\'><rect width=\'100%\' height=\'100%\' fill=\'%23fadce6\'/><text x=\'50%\' y=\'50%\' font-family=\'sans-serif\' font-size=\'14\' text-anchor=\'middle\' fill=\'%23c8506e\'>Upload burst1.jpeg to burst15.jpeg</text></svg>'">
+                <img id="burstDisplay" src="burst1.jpeg" class="burst-img" alt="Burst Frame" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'100%\'><rect width=\'100%\' height=\'100%\' fill=\'%23fadce6\'/><text x=\'50%\' y=\'50%\' font-family=\'sans-serif\' font-size=\'14\' text-anchor=\'middle\' fill=\'%23c8506e\'>Upload burst images</text></svg>'">
             </div>
             <div class="slider-wrap">
                 <input type="range" min="1" max="15" value="1" class="burst-slider" id="burstSlider">
@@ -903,7 +906,7 @@ document.addEventListener('dragover', e => {
 
 // 1. PUZZLE GAME (3x3)
 let puzzleSelected = null; 
-const pSize = 3; // Switched back to 3x3 as requested
+const pSize = 3;
 
 function initPuzzle() {
     const board = document.getElementById('puzzleBoard'); 
@@ -965,9 +968,19 @@ function checkPuzzleWin() {
     }
 }
 
-// 2. MEMORY MATCH (MIXED .JPG and .jpeg files handled from user screenshot)
+// 2. MEMORY MATCH (HARDCODED EXACTLY FROM USER SCREENSHOT)
 let flippedCards = []; 
 let matchedCount = 0;
+
+function getMatchImg(c) {
+    if(c === 1) return 'match1.jpg'; // or .JPG but you said .jpg for the rest
+    if(c === 2) return 'match2.jpeg';
+    if(c === 3) return 'match3.jpg';
+    if(c === 4) return 'match44.jpg'; // Replaced match4 with match44
+    if(c === 5) return 'match5.jpg';
+    if(c === 6) return 'match6.jpeg';
+    return 'match1.jpg'; // fallback
+}
 
 function initMatch() {
     const board = document.getElementById('matchBoard'); 
@@ -983,10 +996,9 @@ function initMatch() {
         div.className = 'match-card'; 
         div.dataset.val = c;
         
-        // Handling the exact cases based on the provided GitHub screenshot
-        let ext = (c === 2 || c === 6) ? 'jpeg' : 'JPG'; 
+        const fileName = getMatchImg(c);
         
-        div.innerHTML = `<div class="card-inner"><div class="card-front">♡</div><div class="card-back" style="background-image: url('match${c}.${ext}');"></div></div>`;
+        div.innerHTML = `<div class="card-inner"><div class="card-front">♡</div><div class="card-back" style="background-image: url('${fileName}');"></div></div>`;
         div.onclick = () => handleMatchClick(div); 
         board.appendChild(div);
     });
@@ -1014,7 +1026,22 @@ function handleMatchClick(div) {
     }
 }
 
-// 3. CAPTCHA
+// 3. CAPTCHA (HARDCODED EXACTLY FROM USER SCREENSHOT)
+function getCapImg(c) {
+    const exts = {
+        1:'jpg', 
+        2:'jpg', 
+        3:'jpg', 
+        4:'jpg', 
+        5:'png', 
+        6:'jpeg', 
+        7:'png', 
+        8:'jpeg', 
+        9:'jpeg'
+    };
+    return `cap${c}.${exts[c]}`;
+}
+
 function initCaptcha() {
     const board = document.getElementById('capBoard'); 
     board.innerHTML = ''; 
@@ -1026,7 +1053,10 @@ function initCaptcha() {
     caps.forEach(c => {
         const div = document.createElement('div'); 
         div.className = 'cap-img-wrap';
-        div.innerHTML = `<img src="cap${c}.jpeg" class="cap-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\\'http://www.w3.org/2000/svg\\\' width=\\\'100%\\\' height=\\\'100%\\\'><rect width=\\\'100%\\\' height=\\\'100%\\\' fill=\\\'%23fadce6\\\'/></svg>'"><div class="cap-check">✓</div>`;
+        
+        const fileName = getCapImg(c);
+        
+        div.innerHTML = `<img src="${fileName}" class="cap-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\\'http://www.w3.org/2000/svg\\\' width=\\\'100%\\\' height=\\\'100%\\\'><rect width=\\\'100%\\\' height=\\\'100%\\\' fill=\\\'%23fadce6\\\'/></svg>'"><div class="cap-check">✓</div>`;
         div.onclick = () => div.classList.toggle('selected'); 
         board.appendChild(div);
     });
