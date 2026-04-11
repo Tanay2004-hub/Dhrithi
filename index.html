@@ -375,7 +375,7 @@ const QS = [
         q: "Hotels in Chennai and Mumbai?", 
         hint: "the ones we spent the night in...", 
         type: "text", ans: ["spectra", "highway"], 
-        clipart: "🏖️ 🌊 🌇", img: "q3.jpg", bgPattern: null,
+        clipart: "🏖️ 🌊 🌇", img: "q3.jpeg", bgPattern: null,
         title: "Miles apart, but together", sub: "CHENNAI · MUMBAI", 
         msg: "Hotel Kay-EM Spectra and Hotel Highway Inn. The distance never mattered when we were together." 
     },
@@ -383,7 +383,7 @@ const QS = [
         q: "What is the brand from which we got your ring and the cross pendant?", 
         hint: "think dainty and silver...", 
         type: "text", ans: ["caliber", "calib", "calibe", "callib", "calleb", "caliberee", "caliberiee", "calibre", "caliberie", "celib"], 
-        clipart: "💍 ✨ ✝️", img: "q4.jpg", bgPattern: "💍 ✝️",
+        clipart: "💍 ✨ ✝️", img: "q4.jpeg", bgPattern: "💍 ✝️",
         title: "The Silver Pieces", sub: "A RING AND A CROSS", 
         msg: "Caliberiee Jewellery. Beautiful, dainty, and chosen especially for you." 
     },
@@ -440,13 +440,11 @@ QS.forEach((q, i) => {
     let bgPatternHtml = '';
     if (q.bgPattern) { bgPatternHtml = `<div class="bg-pattern">${q.bgPattern.repeat(30)}</div>`; }
     
-    // Check if image exists to render polaroid format, else default format
     let revBoxContent = q.img 
         ? `<div style="width: 100%; aspect-ratio: 4/3; overflow: hidden; border-radius: 8px; margin-bottom: 12px; background: var(--photo-bg);">
                <img src="${q.img}" style="width: 100%; height: 100%; object-fit: cover;">
            </div>
-           <div class="rev-photo-title" style="font-size: 1.4rem;">${q.title}</div>
-           <div class="rev-photo-sub" style="margin-bottom: 5px;">${q.sub}</div>`
+           <div class="rev-clipart" style="margin-bottom: 5px; font-size: 2.5rem;">${q.clipart}</div>`
         : `<div class="rev-clipart">${q.clipart}</div>
            <div class="rev-photo-title">${q.title}</div>
            <div class="rev-photo-sub">${q.sub}</div>`;
