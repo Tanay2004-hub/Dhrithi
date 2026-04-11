@@ -172,7 +172,7 @@ body {
 /* 1. Puzzle (3x3) */
 .puzzle-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; width: 100%; aspect-ratio: 1/1; background: var(--line); border: 2px solid var(--rose); border-radius: 12px; overflow: hidden; box-shadow: 0 15px 30px rgba(0,0,0,0.05);}
 .puzzle-grid.solved { gap: 0; border-color: var(--pink); box-shadow: 0 0 20px rgba(200,80,110,0.4); pointer-events: none;}
-.puzzle-piece { width: 100%; height: 100%; background-image: url('puzzle.jpeg'); background-size: 300% 300%; cursor: none; transition: transform 0.2s, filter 0.2s; }
+.puzzle-piece { width: 100%; height: 100%; background-size: 300% 300%; cursor: none; transition: transform 0.2s, filter 0.2s; }
 .puzzle-piece.selected { transform: scale(0.92); filter: brightness(1.2); outline: 3px solid var(--pink); z-index: 10; border-radius: 4px;}
 
 /* 2. Memory Match (3x4) */
@@ -203,7 +203,6 @@ body {
 .burst-slider { -webkit-appearance: none; width: 100%; height: 8px; background: var(--line); border-radius: 5px; outline: none; opacity: 0.7; transition: opacity .2s; }
 .burst-slider:hover { opacity: 1; }
 .burst-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 25px; height: 25px; border-radius: 50%; background: var(--pink); cursor: none; box-shadow: 0 0 10px rgba(200,80,110,0.5);}
-
 
 /* ─── MAP & FEEDBACK UI ─── */
 .map-container { position: relative; width: 100%; max-width: 450px; aspect-ratio: 1 / 1.5; margin: 2rem auto; background: var(--photo-bg); border-radius: 30px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.05); border: 1px solid var(--line); }
@@ -362,7 +361,7 @@ body {
         
         <div class="game-container active">
             <div class="burst-container">
-                <img id="burstDisplay" src="burst1.jpeg" class="burst-img" alt="Burst Frame" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'100%\'><rect width=\'100%\' height=\'100%\' fill=\'%23fadce6\'/><text x=\'50%\' y=\'50%\' font-family=\'sans-serif\' font-size=\'14\' text-anchor=\'middle\' fill=\'%23c8506e\'>Upload burst images</text></svg>'">
+                <img id="burstDisplay" class="burst-img" alt="Burst Frame">
             </div>
             <div class="slider-wrap">
                 <input type="range" min="1" max="15" value="1" class="burst-slider" id="burstSlider">
@@ -376,7 +375,7 @@ body {
         <h1 class="intro-name" style="font-size: clamp(2.5rem, 10vw, 4rem);">Our Map</h1>
         <p style="font-size: 11px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 1rem;">The journey of us</p>
         <div class="map-container">
-            <img src="map.png" alt="Our Map" class="map-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'100%\'><rect width=\'100%\' height=\'100%\' fill=\'%23fadce6\'/><text x=\'50%\' y=\'50%\' font-family=\'sans-serif\' font-size=\'16\' text-anchor=\'middle\' fill=\'%23c8506e\'>Upload map.png</text></svg>'">
+            <img src="map.png" alt="Our Map" class="map-img">
         </div>
         <button class="btn-premium btn-outline" style="margin-top: 2rem;" onclick="goTo('sFinal')">← Back to Menu</button>
     </div>
@@ -434,6 +433,26 @@ body {
 <script>
 /* ─── WEB3FORMS EMAIL KEY ─── */
 const WEB3FORMS_KEY = "8be6a82c-5694-42b0-8ffd-ad2b249125ca";
+
+/* ─── SMART IMAGE LOADER (FIXES GITHUB EXTENSION ISSUES) ─── */
+const validExts = ['jpeg', 'jpg', 'JPG', 'png', 'PNG', 'JPEG'];
+
+function loadImg(baseName, callback) {
+    let i = 0;
+    function tryNext() {
+        if(i >= validExts.length) {
+            // Failsafe pink box if image is truly missing
+            callback('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><rect width="100%" height="100%" fill="%23fadce6"/></svg>');
+            return;
+        }
+        let img = new Image();
+        let src = baseName + '.' + validExts[i];
+        img.onload = () => callback(src);
+        img.onerror = () => { i++; tryNext(); };
+        img.src = src;
+    }
+    tryNext();
+}
 
 /* ─── FAST CURSOR ─── */
 const dot = document.getElementById('cursor');
@@ -934,6 +953,12 @@ function initPuzzle() {
         div.onclick = () => handlePuzzleClick(div); 
         board.appendChild(div);
     });
+
+    loadImg('puzzle', (src) => {
+        document.querySelectorAll('.puzzle-piece').forEach(el => {
+            el.style.backgroundImage = `url('${src}')`;
+        });
+    });
 }
 
 function handlePuzzleClick(div) {
@@ -968,19 +993,9 @@ function checkPuzzleWin() {
     }
 }
 
-// 2. MEMORY MATCH (HARDCODED EXACTLY FROM USER SCREENSHOT)
+// 2. MEMORY MATCH
 let flippedCards = []; 
 let matchedCount = 0;
-
-function getMatchImg(c) {
-    if(c === 1) return 'match1.jpg'; // or .JPG but you said .jpg for the rest
-    if(c === 2) return 'match2.jpeg';
-    if(c === 3) return 'match3.jpg';
-    if(c === 4) return 'match44.jpg'; // Replaced match4 with match44
-    if(c === 5) return 'match5.jpg';
-    if(c === 6) return 'match6.jpeg';
-    return 'match1.jpg'; // fallback
-}
 
 function initMatch() {
     const board = document.getElementById('matchBoard'); 
@@ -996,11 +1011,14 @@ function initMatch() {
         div.className = 'match-card'; 
         div.dataset.val = c;
         
-        const fileName = getMatchImg(c);
-        
-        div.innerHTML = `<div class="card-inner"><div class="card-front">♡</div><div class="card-back" style="background-image: url('${fileName}');"></div></div>`;
+        div.innerHTML = `<div class="card-inner"><div class="card-front">♡</div><div class="card-back"></div></div>`;
         div.onclick = () => handleMatchClick(div); 
         board.appendChild(div);
+
+        let base = (c === 4) ? 'match44' : 'match' + c;
+        loadImg(base, (src) => {
+            div.querySelector('.card-back').style.backgroundImage = `url('${src}')`;
+        });
     });
 }
 
@@ -1026,22 +1044,7 @@ function handleMatchClick(div) {
     }
 }
 
-// 3. CAPTCHA (HARDCODED EXACTLY FROM USER SCREENSHOT)
-function getCapImg(c) {
-    const exts = {
-        1:'jpg', 
-        2:'jpg', 
-        3:'jpg', 
-        4:'jpg', 
-        5:'png', 
-        6:'jpeg', 
-        7:'png', 
-        8:'jpeg', 
-        9:'jpeg'
-    };
-    return `cap${c}.${exts[c]}`;
-}
-
+// 3. CAPTCHA
 function initCaptcha() {
     const board = document.getElementById('capBoard'); 
     board.innerHTML = ''; 
@@ -1054,11 +1057,13 @@ function initCaptcha() {
         const div = document.createElement('div'); 
         div.className = 'cap-img-wrap';
         
-        const fileName = getCapImg(c);
-        
-        div.innerHTML = `<img src="${fileName}" class="cap-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\\'http://www.w3.org/2000/svg\\\' width=\\\'100%\\\' height=\\\'100%\\\'><rect width=\\\'100%\\\' height=\\\'100%\\\' fill=\\\'%23fadce6\\\'/></svg>'"><div class="cap-check">✓</div>`;
+        div.innerHTML = `<img class="cap-img"><div class="cap-check">✓</div>`;
         div.onclick = () => div.classList.toggle('selected'); 
         board.appendChild(div);
+
+        loadImg('cap' + c, (src) => {
+            div.querySelector('.cap-img').src = src;
+        });
     });
 }
 
@@ -1074,8 +1079,12 @@ function verifyCaptcha() {
 }
 
 // 4. BURST SLIDER
+let burstSrcs = {};
 document.getElementById('burstSlider').addEventListener('input', function(e) { 
-    document.getElementById('burstDisplay').src = 'burst' + e.target.value + '.jpeg'; 
+    let val = e.target.value;
+    if(burstSrcs[val]) {
+        document.getElementById('burstDisplay').src = burstSrcs[val]; 
+    }
 });
 
 
@@ -1111,10 +1120,12 @@ function initClocks() {
     initMatch(); 
     initCaptcha();
     
-    // Preload bursts
+    // Preload bursts through the smart loader
     for(let i=1; i<=15; i++) { 
-        const img = new Image(); 
-        img.src = 'burst'+i+'.jpeg'; 
+        loadImg('burst' + i, (src) => { 
+            burstSrcs[i] = src;
+            if (i === 1) document.getElementById('burstDisplay').src = src;
+        });
     } 
     
     const pBox = document.getElementById('petals'); 
